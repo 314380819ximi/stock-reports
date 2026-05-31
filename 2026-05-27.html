@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>🎯 龙头复盘 · 2026-05-27</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: "Microsoft YaHei", "PingFang SC", -apple-system, sans-serif;
+    background: #0a0e1a;
+    color: #d4d9e4;
+    line-height: 1.6;
+    font-size: 14px;
+}
+.layout { display: flex; min-height: 100vh; }
+
+/* === 侧边栏 === */
+.sidebar {
+    width: 240px;
+    background: #131826;
+    border-right: 1px solid #1f2638;
+    padding: 24px 16px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    flex-shrink: 0;
+}
+.sidebar h2 {
+    color: #4d8eff;
+    font-size: 13px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #1f2638;
+    letter-spacing: 1px;
+}
+.sidebar a {
+    display: block;
+    color: #b8bfd0;
+    text-decoration: none;
+    padding: 9px 12px;
+    border-radius: 6px;
+    margin: 3px 0;
+    font-size: 13px;
+    transition: all 0.15s;
+}
+.sidebar a:hover { background: #1a2238; color: #4d8eff; }
+.sidebar a.active {
+    background: linear-gradient(90deg, #1f3a8a33 0%, transparent 100%);
+    color: #4d8eff;
+    font-weight: 600;
+    border-left: 2px solid #4d8eff;
+}
+
+/* === 主内容 === */
+.main {
+    flex: 1;
+    padding: 32px 48px;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #1f2638;
+    margin-bottom: 24px;
+}
+.title {
+    font-size: 24px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #ff9d4d, #ff6b6b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.subtitle {
+    color: #6b7390;
+    font-size: 12px;
+}
+
+/* === 情绪温度卡 === */
+.sentiment {
+    background: linear-gradient(135deg, #131826 0%, #1a2238 100%);
+    border: 1px solid #1f2638;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 28px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 24px;
+}
+.sentiment-score {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.sentiment-num {
+    font-size: 56px;
+    font-weight: 800;
+    line-height: 1;
+}
+.sentiment-stage {
+    font-size: 14px;
+    margin-top: 8px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    display: inline-block;
+    align-self: center;
+}
+.sentiment-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    align-items: center;
+}
+.metric {
+    background: #0a0e1a;
+    border-radius: 8px;
+    padding: 12px 14px;
+    border-left: 3px solid #4d8eff;
+}
+.metric-label {
+    font-size: 11px;
+    color: #6b7390;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+}
+.metric-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: #e7ebf5;
+}
+.metric-extra { font-size: 11px; color: #8b94ad; margin-top: 2px; }
+
+/* === 题材卡片 === */
+.theme-card {
+    background: #131826;
+    border: 1px solid #1f2638;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.theme-header {
+    padding: 18px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #1f2638;
+}
+.theme-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #e7ebf5;
+}
+.theme-stage {
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+/* 评分分级颜色 */
+.score-15 { background: linear-gradient(90deg, #ef4444, #f97316); color: white; }
+.score-11 { background: linear-gradient(90deg, #f97316, #facc15); color: #1a1a1a; }
+.score-7  { background: linear-gradient(90deg, #facc15, #84cc16); color: #1a1a1a; }
+.score-3  { background: linear-gradient(90deg, #6b7280, #9ca3af); color: white; }
+.score-0  { background: #4b5563; color: #d1d5db; }
+
+.theme-body { padding: 20px 22px; }
+
+/* 信息行 */
+.theme-info-row {
+    display: flex;
+    gap: 24px;
+    font-size: 13px;
+    color: #b8bfd0;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+}
+.theme-info-row strong { color: #ff9d4d; }
+.catalyst {
+    background: #1a2238;
+    padding: 8px 14px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    border-left: 3px solid #4d8eff;
+}
+.catalyst-label { color: #6b7390; font-size: 11px; margin-right: 8px; }
+
+/* 评分进度条 */
+.score-bars {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
+    padding: 14px;
+    background: #0a0e1a;
+    border-radius: 8px;
+}
+.score-bar {
+    text-align: center;
+}
+.score-bar-label {
+    font-size: 10px;
+    color: #6b7390;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+}
+.score-bar-track {
+    background: #1f2638;
+    height: 6px;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 4px;
+}
+.score-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.4s;
+}
+.score-bar-fill-0 { background: #4b5563; width: 0%; }
+.score-bar-fill-1 { background: #f97316; width: 33%; }
+.score-bar-fill-2 { background: #facc15; width: 66%; }
+.score-bar-fill-3 { background: #22c55e; width: 100%; }
+.score-bar-value { font-size: 11px; color: #e7ebf5; font-weight: 600; }
+
+/* 市场观察盒子 */
+.advice-box {
+    background: #0a0e1a;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    border-left: 4px solid #4d8eff;
+}
+.advice-position {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+.pos-强信号     { background: #dc2626; color: white; }
+.pos-中信号   { background: #f59e0b; color: #1a1a1a; }
+.pos-观察     { background: #6b7280; color: white; }
+.pos-信号转弱     { background: #475569; color: #d1d5db; }
+.pos-题材熄火     { background: #1f2937; color: #6b7390; }
+
+.advice-list { font-size: 13px; line-height: 1.8; }
+.advice-list li { list-style: none; padding-left: 0; }
+.buy { color: #22c55e; }
+.avoid { color: #6b7390; }
+.risk { color: #f59e0b; }
+
+/* 梯队表格 */
+.ladder-section { margin-top: 16px; }
+.ladder-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #ff9d4d;
+    margin: 16px 0 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px dashed #1f2638;
+}
+.ladder-title small { color: #6b7390; font-weight: normal; font-size: 11px; margin-left: 8px; }
+.stock-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+.stock-table th {
+    text-align: left;
+    color: #6b7390;
+    font-size: 11px;
+    font-weight: normal;
+    padding: 6px 8px;
+    border-bottom: 1px solid #1f2638;
+    letter-spacing: 0.5px;
+}
+.stock-table td {
+    padding: 8px;
+    border-bottom: 1px solid #1a2238;
+    color: #b8bfd0;
+}
+.stock-table tr:last-child td { border-bottom: none; }
+.stock-table tr:hover { background: #1a2238; }
+.stock-code {
+    font-family: "Cascadia Code", "Consolas", monospace;
+    color: #4d8eff;
+    font-size: 11px;
+}
+.stock-name { color: #e7ebf5; font-weight: 600; }
+.boards-tag {
+    display: inline-block;
+    background: #dc2626;
+    color: white;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-right: 4px;
+}
+.warn-tag { color: #f59e0b; font-size: 11px; }
+.reason-tag { color: #6b7390; font-style: italic; font-size: 11px; }
+
+/* 龙头切换 */
+.dragon-switch {
+    background: #131826;
+    border: 1px solid #1f2638;
+    border-radius: 12px;
+    padding: 20px 22px;
+    margin-bottom: 24px;
+}
+.dragon-switch h3 { color: #ff9d4d; margin-bottom: 12px; font-size: 16px; }
+.fallen { color: #6b7280; }
+.new-candidate { color: #22c55e; }
+
+/* 策略提示 */
+.strategy {
+    background: linear-gradient(135deg, #1a2238 0%, #131826 100%);
+    border: 1px solid #2c3654;
+    border-radius: 12px;
+    padding: 20px 22px;
+    margin-bottom: 24px;
+}
+.strategy h3 { color: #4d8eff; margin-bottom: 12px; font-size: 16px; }
+.strategy ul { padding-left: 22px; line-height: 2; }
+
+/* 通用 */
+hr { border: none; border-top: 1px solid #1f2638; margin: 24px 0; }
+.footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1f2638;
+    color: #4a5168;
+    font-size: 11px;
+    text-align: center;
+}
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #131826; }
+::-webkit-scrollbar-thumb { background: #2c3654; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #4d8eff; }
+
+/* 情绪温度数字颜色 */
+.heat-cold { color: #4d8eff; }
+.heat-cool { color: #84cc16; }
+.heat-warm { color: #facc15; }
+.heat-hot  { color: #f97316; }
+.heat-fire { color: #ef4444; }
+</style>
+</head>
+<body>
+<div style="background:#3a1a1a;border-left:5px solid #ff5555;padding:12px 20px;margin:0 0 20px 0;color:#ffaaaa;font-size:14px;">
+⚠️ <strong>风险提示</strong>: 本报告仅作学习交流，不构成投资建议。股市有风险，决策风险自担。
+</div>
+
+<div class="layout">
+
+    <nav class="sidebar">
+      <h2>📅 历史报告</h2>
+      <a href="2026-05-29.html" class="">📊 2026-05-29</a>
+<a href="2026-05-27.html" class="active">📊 2026-05-27</a>
+    </nav>
+    <main class="main">
+      <div class="header">
+        <div class="title">🎯 A股龙头复盘 · 2026-05-27</div>
+        <div class="subtitle">生成 22:01:40</div>
+      </div>
+      
+    <div class="sentiment">
+      <div class="sentiment-score">
+        <div class="sentiment-num heat-warm">50°</div>
+        <div class="sentiment-stage score-7">✓ 正常</div>
+      </div>
+      <div class="sentiment-metrics">
+        <div class="metric">
+          <div class="metric-label">涨停 / 跌停</div>
+          <div class="metric-value">47 / 0</div>
+          <div class="metric-extra">剔除ST/新股 47</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">连板高度</div>
+          <div class="metric-value">3 板</div>
+          <div class="metric-extra">3板×3 · 2板×5 · 1板×39 <span style="color:#22c55e">✓ 完整</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">⭐ 晋级率</div>
+          <div class="metric-value">17.4%</div>
+          <div class="metric-extra">昨46→今8</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">炸板率</div>
+          <div class="metric-value">59.6%</div>
+          <div class="metric-extra">28 只触板未封</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="theme-card">
+      <div class="theme-header">
+        <div class="theme-name">▼ 电力</div>
+        <div class="theme-stage score-11">12/18 · ⚡ 健康发酵</div>
+      </div>
+      <div class="theme-body">
+        <div class="theme-info-row">
+          <span><strong>7</strong> 只涨停</span>
+          <span>最高 <strong>3</strong> 板</span>
+          <span>总封单 <strong>7.75亿</strong></span>
+          
+        </div>
+        
+        <div class="catalyst">
+          <span class="catalyst-label">💡 催化原因</span>
+          电力供给 / 取暖季预期 / 电力需求增长
+        </div>
+        
+        <div class="score-bars">
+        <div class="score-bar">
+          <div class="score-bar-label">催化</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-3"></div></div>
+          <div class="score-bar-value">3/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">梯队</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-2"></div></div>
+          <div class="score-bar-value">2/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">封单</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-2"></div></div>
+          <div class="score-bar-value">2/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">资金</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">空间</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-2"></div></div>
+          <div class="score-bar-value">2/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">外溢</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-2"></div></div>
+          <div class="score-bar-value">2/3</div>
+        </div>
+        </div>
+        <div class="advice-box"><span class="advice-position pos-中信号">🎯 中信号</span><span style="color:#b8bfd0;margin-left:10px;font-size:13px">关注中军接续表现</span><ul class="advice-list"><li class="buy">✅ 龙头【华电能源】3板盘中分歧位关注度高</li></ul></div>
+        
+    <div class="ladder-section">
+      <div class="ladder-title">🐲 龙头 <small>题材最高板</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="boards-tag">3板</span><span class="stock-name">华电能源</span> <span class="stock-code">600726</span></td>
+      <td>1.91亿</td>
+      <td>09:35:54</td>
+      <td>1.7%</td>
+      <td>626亿</td>
+      <td> </td>
+    </tr>
+    </tbody>
+      </table>
+    </div>
+    
+    <div class="ladder-section">
+      <div class="ladder-title">👥 跟风 <small>早盘<10:00封·封单≥1500万</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="stock-name">利柏特</span> <span class="stock-code">605167</span></td>
+      <td>1873万</td>
+      <td>09:36:26</td>
+      <td>2.4%</td>
+      <td>78亿</td>
+      <td><span class="warn-tag">⚠1炸</span> </td>
+    </tr>
+    </tbody>
+      </table>
+    </div>
+    
+    <div class="ladder-section">
+      <div class="ladder-title">👁 首板观察 <small>封晚/封弱·待次日二板验证</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="stock-name">华电辽能</span> <span class="stock-code">600396</span></td>
+      <td>2.25亿</td>
+      <td>13:02:56</td>
+      <td>16.4%</td>
+      <td>273亿</td>
+      <td> <span class="reason-tag">·13:02:56才封</span></td>
+    </tr>
+    
+    <tr>
+      <td><span class="stock-name">华能蒙电</span> <span class="stock-code">600863</span></td>
+      <td>1.17亿</td>
+      <td>13:02:27</td>
+      <td>6.1%</td>
+      <td>438亿</td>
+      <td> <span class="reason-tag">·13:02:27才封</span></td>
+    </tr>
+    
+    <tr>
+      <td><span class="stock-name">粤电力Ａ</span> <span class="stock-code">000539</span></td>
+      <td>1.06亿</td>
+      <td>13:05:15</td>
+      <td>6.9%</td>
+      <td>188亿</td>
+      <td> <span class="reason-tag">·13:05:15才封</span></td>
+    </tr>
+    </tbody>
+      </table>
+    </div>
+    
+      </div>
+    </div>
+    
+    <div class="theme-card">
+      <div class="theme-header">
+        <div class="theme-name">▼ AI算力</div>
+        <div class="theme-stage score-11">12/18 · ⚡ 健康发酵</div>
+      </div>
+      <div class="theme-body">
+        <div class="theme-info-row">
+          <span><strong>6</strong> 只涨停</span>
+          <span>最高 <strong>1</strong> 板</span>
+          <span>总封单 <strong>8.28亿</strong></span>
+          <span style="color:#f59e0b;font-size:12px;margin-left:14px">⚠ 短板：梯队断</span>
+        </div>
+        
+        <div class="catalyst">
+          <span class="catalyst-label">💡 催化原因</span>
+          AI算力建设 / AI算力建设需求
+        </div>
+        
+        <div class="score-bars">
+        <div class="score-bar">
+          <div class="score-bar-label">催化</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-3"></div></div>
+          <div class="score-bar-value">3/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">梯队</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-0"></div></div>
+          <div class="score-bar-value">0/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">封单</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-3"></div></div>
+          <div class="score-bar-value">3/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">资金</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">空间</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-3"></div></div>
+          <div class="score-bar-value">3/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">外溢</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-2"></div></div>
+          <div class="score-bar-value">2/3</div>
+        </div>
+        </div>
+        <div class="advice-box"><span class="advice-position pos-中信号">🎯 中信号</span><span style="color:#b8bfd0;margin-left:10px;font-size:13px">关注中军接续表现</span><ul class="advice-list"><li class="buy">✅ 次日重点观察【江海股份】二板表现（题材龙一候选）</li><li class="avoid">❌ 不追午后封板的票（如观察池）</li></ul></div>
+        
+    <div class="ladder-section">
+      <div class="ladder-title">⭐ 首板龙头候选 <small>上午<10:30封·封单≥5000万·无炸板</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="stock-name">江海股份</span> <span class="stock-code">002484</span></td>
+      <td>6.06亿</td>
+      <td>09:25:00</td>
+      <td>1.7%</td>
+      <td>555亿</td>
+      <td> <span class="reason-tag">·09:25:00首封·封单6.06亿·一字不开</span></td>
+    </tr>
+    </tbody>
+      </table>
+    </div>
+    
+    <div class="ladder-section">
+      <div class="ladder-title">👁 首板观察 <small>封晚/封弱·待次日二板验证</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="stock-name">良信股份</span> <span class="stock-code">002706</span></td>
+      <td>7103万</td>
+      <td>09:59:45</td>
+      <td>9.2%</td>
+      <td>136亿</td>
+      <td><span class="warn-tag">⚠1炸</span> <span class="reason-tag">·炸板1次</span></td>
+    </tr>
+    
+    <tr>
+      <td><span class="stock-name">罗曼股份</span> <span class="stock-code">605289</span></td>
+      <td>6884万</td>
+      <td>11:09:11</td>
+      <td>4.3%</td>
+      <td>181亿</td>
+      <td> <span class="reason-tag">·11:09:11才封</span></td>
+    </tr>
+    
+    <tr>
+      <td><span class="stock-name">XD四方股</span> <span class="stock-code">601126</span></td>
+      <td>3182万</td>
+      <td>10:06:43</td>
+      <td>5.3%</td>
+      <td>683亿</td>
+      <td><span class="warn-tag">⚠17炸</span> <span class="reason-tag">·封单3182万·炸板17次</span></td>
+    </tr>
+    </tbody>
+      </table>
+    </div>
+    
+      </div>
+    </div>
+    
+    <div class="theme-card">
+      <div class="theme-header">
+        <div class="theme-name">▼ 零售消费</div>
+        <div class="theme-stage score-7">8/18 · ⚠ 分歧观察</div>
+      </div>
+      <div class="theme-body">
+        <div class="theme-info-row">
+          <span><strong>3</strong> 只涨停</span>
+          <span>最高 <strong>2</strong> 板</span>
+          <span>总封单 <strong>1.38亿</strong></span>
+          <span style="color:#f59e0b;font-size:12px;margin-left:14px">⚠ 短板：封单弱 / 催化老</span>
+        </div>
+        
+        <div class="catalyst">
+          <span class="catalyst-label">💡 催化原因</span>
+          胖东来调改
+        </div>
+        
+        <div class="score-bars">
+        <div class="score-bar">
+          <div class="score-bar-label">催化</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">梯队</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">封单</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">资金</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">空间</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-3"></div></div>
+          <div class="score-bar-value">3/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">外溢</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        </div>
+        <div class="advice-box"><span class="advice-position pos-观察">🎯 观察</span><span style="color:#b8bfd0;margin-left:10px;font-size:13px">仅关注龙头位·谨慎</span><ul class="advice-list"><li class="buy">✅ ⭐ 二板定龙头【步步高】是重点（最佳介入期）</li><li class="buy">✅ 跟风首板可观察次日二板晋级</li></ul></div>
+        
+    <div class="ladder-section">
+      <div class="ladder-title">🐲 龙头 <small>题材最高板</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="boards-tag">2板</span><span class="stock-name">步步高</span> <span class="stock-code">002251</span></td>
+      <td>9332万</td>
+      <td>11:18:42</td>
+      <td>13.3%</td>
+      <td>98亿</td>
+      <td> </td>
+    </tr>
+    
+    <tr>
+      <td><span class="boards-tag">2板</span><span class="stock-name">中百集团</span> <span class="stock-code">000759</span></td>
+      <td>1842万</td>
+      <td>11:25:45</td>
+      <td>20.6%</td>
+      <td>40亿</td>
+      <td><span class="warn-tag">⚠1炸</span> </td>
+    </tr>
+    </tbody>
+      </table>
+    </div>
+    
+    <div class="ladder-section">
+      <div class="ladder-title">👥 跟风 <small>早盘<10:00封·封单≥1500万</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="stock-name">阳光股份</span> <span class="stock-code">000608</span></td>
+      <td>2667万</td>
+      <td>09:41:45</td>
+      <td>3.7%</td>
+      <td>31亿</td>
+      <td> </td>
+    </tr>
+    </tbody>
+      </table>
+    </div>
+    
+      </div>
+    </div>
+    
+    <div class="theme-card">
+      <div class="theme-header">
+        <div class="theme-name">▼ 光通信铜缆</div>
+        <div class="theme-stage score-7">9/18 · ⚠ 分歧观察</div>
+      </div>
+      <div class="theme-body">
+        <div class="theme-info-row">
+          <span><strong>2</strong> 只涨停</span>
+          <span>最高 <strong>2</strong> 板</span>
+          <span>总封单 <strong>2.48亿</strong></span>
+          
+        </div>
+        
+        <div class="score-bars">
+        <div class="score-bar">
+          <div class="score-bar-label">催化</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-2"></div></div>
+          <div class="score-bar-value">2/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">梯队</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">封单</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-2"></div></div>
+          <div class="score-bar-value">2/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">资金</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">空间</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-3"></div></div>
+          <div class="score-bar-value">3/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">外溢</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-0"></div></div>
+          <div class="score-bar-value">0/3</div>
+        </div>
+        </div>
+        <div class="advice-box"><span class="advice-position pos-观察">🎯 观察</span><span style="color:#b8bfd0;margin-left:10px;font-size:13px">仅关注龙头位·谨慎</span><ul class="advice-list"><li class="buy">✅ ⭐ 二板定龙头【中京电子】是重点（最佳介入期）</li><li class="buy">✅ 跟风首板可观察次日二板晋级</li></ul></div>
+        
+    <div class="ladder-section">
+      <div class="ladder-title">🐲 龙头 <small>题材最高板</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="boards-tag">2板</span><span class="stock-name">中京电子</span> <span class="stock-code">002579</span></td>
+      <td>1.60亿</td>
+      <td>09:25:00</td>
+      <td>17.6%</td>
+      <td>96亿</td>
+      <td><span class="warn-tag">⚠4炸</span> </td>
+    </tr>
+    </tbody>
+      </table>
+    </div>
+    
+    <div class="ladder-section">
+      <div class="ladder-title">👥 跟风 <small>早盘<10:00封·封单≥1500万</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="stock-name">合锻智能</span> <span class="stock-code">603011</span></td>
+      <td>8766万</td>
+      <td>09:36:52</td>
+      <td>5.4%</td>
+      <td>102亿</td>
+      <td><span class="warn-tag">⚠1炸</span> </td>
+    </tr>
+    </tbody>
+      </table>
+    </div>
+    
+      </div>
+    </div>
+    <div class="dragon-switch"><h3>🔄 龙头动态切换</h3><div class="fallen"><strong style="color:#f59e0b">📉 老龙降级</strong><ul style="padding-left:22px;line-height:1.9"><li>双星新材 <code style="color:#4d8eff">002585</code> · 原 3板 · 今日未涨停</li><li>黄河旋风 <code style="color:#4d8eff">600172</code> · 原 3板 · 今日未涨停</li><li>新金路 <code style="color:#4d8eff">000510</code> · 原 3板 · 今日未涨停</li><li>宝鼎科技 <code style="color:#4d8eff">002552</code> · 原 3板 · 今日未涨停</li></ul></div><div class="new-candidate" style="margin-top:14px"><strong style="color:#22c55e">🆕 新龙观察（昨1板→今2板）</strong><ul style="padding-left:22px;line-height:1.9"><li>中京电子 <code style="color:#4d8eff">002579</code> · 封单 1.60亿 · 09:25:00首封</li><li>步步高 <code style="color:#4d8eff">002251</code> · 封单 9332万 · 11:18:42首封</li><li>盛龙股份 <code style="color:#4d8eff">001257</code> · 封单 9269万 · 09:38:39首封</li><li>真视通 <code style="color:#4d8eff">002771</code> · 封单 3586万 · 09:33:54首封</li><li>中百集团 <code style="color:#4d8eff">000759</code> · 封单 1842万 · 11:25:45首封</li></ul></div></div><div class="strategy"><h3>📋 次日策略</h3><ul><li>✓ <strong>正常期</strong>：择优低吸题材龙头，避免高位风险</li><li>🎯 <strong>首选题材</strong>：电力（最高3板，7只涨停）</li><li>🆕 <strong>接力候选</strong>：中京电子（002579）昨1板今2板，关注三板晋级</li><li>⚠ <strong>题材熄火</strong>：4 只老龙降级，避免反包博弈</li><li>⚠ <strong>炸板率偏高</strong>：当日封板质量差，次日开盘谨慎</li></ul></div>
+        <div class="footer">
+            数据来源：东财涨停池 + 同花顺热点 / 龙头战法策略 / 自动生成
+        </div>
+    </main>
+</div>
+</body>
+</html>
