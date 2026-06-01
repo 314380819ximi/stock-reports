@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>🎯 龙头复盘 · 2026-06-01</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: "Microsoft YaHei", "PingFang SC", -apple-system, sans-serif;
+    background: #0a0e1a;
+    color: #d4d9e4;
+    line-height: 1.6;
+    font-size: 14px;
+}
+.layout { display: flex; min-height: 100vh; }
+
+/* === 侧边栏 === */
+.sidebar {
+    width: 240px;
+    background: #131826;
+    border-right: 1px solid #1f2638;
+    padding: 24px 16px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    flex-shrink: 0;
+}
+.sidebar h2 {
+    color: #4d8eff;
+    font-size: 13px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #1f2638;
+    letter-spacing: 1px;
+}
+.sidebar a {
+    display: block;
+    color: #b8bfd0;
+    text-decoration: none;
+    padding: 9px 12px;
+    border-radius: 6px;
+    margin: 3px 0;
+    font-size: 13px;
+    transition: all 0.15s;
+}
+.sidebar a:hover { background: #1a2238; color: #4d8eff; }
+.sidebar a.active {
+    background: linear-gradient(90deg, #1f3a8a33 0%, transparent 100%);
+    color: #4d8eff;
+    font-weight: 600;
+    border-left: 2px solid #4d8eff;
+}
+
+/* === 主内容 === */
+.main {
+    flex: 1;
+    padding: 32px 48px;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #1f2638;
+    margin-bottom: 24px;
+}
+.title {
+    font-size: 24px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #ff9d4d, #ff6b6b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.subtitle {
+    color: #6b7390;
+    font-size: 12px;
+}
+
+/* === 情绪温度卡 === */
+.sentiment {
+    background: linear-gradient(135deg, #131826 0%, #1a2238 100%);
+    border: 1px solid #1f2638;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 28px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 24px;
+}
+.sentiment-score {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.sentiment-num {
+    font-size: 56px;
+    font-weight: 800;
+    line-height: 1;
+}
+.sentiment-stage {
+    font-size: 14px;
+    margin-top: 8px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    display: inline-block;
+    align-self: center;
+}
+.sentiment-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    align-items: center;
+}
+.metric {
+    background: #0a0e1a;
+    border-radius: 8px;
+    padding: 12px 14px;
+    border-left: 3px solid #4d8eff;
+}
+.metric-label {
+    font-size: 11px;
+    color: #6b7390;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+}
+.metric-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: #e7ebf5;
+}
+.metric-extra { font-size: 11px; color: #8b94ad; margin-top: 2px; }
+
+/* === 题材卡片 === */
+.theme-card {
+    background: #131826;
+    border: 1px solid #1f2638;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.theme-header {
+    padding: 18px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #1f2638;
+}
+.theme-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #e7ebf5;
+}
+.theme-stage {
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+/* 评分分级颜色 */
+.score-15 { background: linear-gradient(90deg, #ef4444, #f97316); color: white; }
+.score-11 { background: linear-gradient(90deg, #f97316, #facc15); color: #1a1a1a; }
+.score-7  { background: linear-gradient(90deg, #facc15, #84cc16); color: #1a1a1a; }
+.score-3  { background: linear-gradient(90deg, #6b7280, #9ca3af); color: white; }
+.score-0  { background: #4b5563; color: #d1d5db; }
+
+.theme-body { padding: 20px 22px; }
+
+/* 信息行 */
+.theme-info-row {
+    display: flex;
+    gap: 24px;
+    font-size: 13px;
+    color: #b8bfd0;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+}
+.theme-info-row strong { color: #ff9d4d; }
+.catalyst {
+    background: #1a2238;
+    padding: 8px 14px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    border-left: 3px solid #4d8eff;
+}
+.catalyst-label { color: #6b7390; font-size: 11px; margin-right: 8px; }
+
+/* 评分进度条 */
+.score-bars {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
+    padding: 14px;
+    background: #0a0e1a;
+    border-radius: 8px;
+}
+.score-bar {
+    text-align: center;
+}
+.score-bar-label {
+    font-size: 10px;
+    color: #6b7390;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+}
+.score-bar-track {
+    background: #1f2638;
+    height: 6px;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 4px;
+}
+.score-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.4s;
+}
+.score-bar-fill-0 { background: #4b5563; width: 0%; }
+.score-bar-fill-1 { background: #f97316; width: 33%; }
+.score-bar-fill-2 { background: #facc15; width: 66%; }
+.score-bar-fill-3 { background: #22c55e; width: 100%; }
+.score-bar-value { font-size: 11px; color: #e7ebf5; font-weight: 600; }
+
+/* 市场观察盒子 */
+.advice-box {
+    background: #0a0e1a;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    border-left: 4px solid #4d8eff;
+}
+.advice-position {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+.pos-强信号     { background: #dc2626; color: white; }
+.pos-中信号   { background: #f59e0b; color: #1a1a1a; }
+.pos-观察     { background: #6b7280; color: white; }
+.pos-信号转弱     { background: #475569; color: #d1d5db; }
+.pos-题材熄火     { background: #1f2937; color: #6b7390; }
+
+.advice-list { font-size: 13px; line-height: 1.8; }
+.advice-list li { list-style: none; padding-left: 0; }
+.buy { color: #22c55e; }
+.avoid { color: #6b7390; }
+.risk { color: #f59e0b; }
+
+/* 梯队表格 */
+.ladder-section { margin-top: 16px; }
+.ladder-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #ff9d4d;
+    margin: 16px 0 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px dashed #1f2638;
+}
+.ladder-title small { color: #6b7390; font-weight: normal; font-size: 11px; margin-left: 8px; }
+.stock-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+.stock-table th {
+    text-align: left;
+    color: #6b7390;
+    font-size: 11px;
+    font-weight: normal;
+    padding: 6px 8px;
+    border-bottom: 1px solid #1f2638;
+    letter-spacing: 0.5px;
+}
+.stock-table td {
+    padding: 8px;
+    border-bottom: 1px solid #1a2238;
+    color: #b8bfd0;
+}
+.stock-table tr:last-child td { border-bottom: none; }
+.stock-table tr:hover { background: #1a2238; }
+.stock-code {
+    font-family: "Cascadia Code", "Consolas", monospace;
+    color: #4d8eff;
+    font-size: 11px;
+}
+.stock-name { color: #e7ebf5; font-weight: 600; }
+.boards-tag {
+    display: inline-block;
+    background: #dc2626;
+    color: white;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-right: 4px;
+}
+.warn-tag { color: #f59e0b; font-size: 11px; }
+.reason-tag { color: #6b7390; font-style: italic; font-size: 11px; }
+
+/* 龙头切换 */
+.dragon-switch {
+    background: #131826;
+    border: 1px solid #1f2638;
+    border-radius: 12px;
+    padding: 20px 22px;
+    margin-bottom: 24px;
+}
+.dragon-switch h3 { color: #ff9d4d; margin-bottom: 12px; font-size: 16px; }
+.fallen { color: #6b7280; }
+.new-candidate { color: #22c55e; }
+
+/* 策略提示 */
+.strategy {
+    background: linear-gradient(135deg, #1a2238 0%, #131826 100%);
+    border: 1px solid #2c3654;
+    border-radius: 12px;
+    padding: 20px 22px;
+    margin-bottom: 24px;
+}
+.strategy h3 { color: #4d8eff; margin-bottom: 12px; font-size: 16px; }
+.strategy ul { padding-left: 22px; line-height: 2; }
+
+/* 通用 */
+hr { border: none; border-top: 1px solid #1f2638; margin: 24px 0; }
+.footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1f2638;
+    color: #4a5168;
+    font-size: 11px;
+    text-align: center;
+}
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #131826; }
+::-webkit-scrollbar-thumb { background: #2c3654; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #4d8eff; }
+
+/* 情绪温度数字颜色 */
+.heat-cold { color: #4d8eff; }
+.heat-cool { color: #84cc16; }
+.heat-warm { color: #facc15; }
+.heat-hot  { color: #f97316; }
+.heat-fire { color: #ef4444; }
+</style>
+
+<style>
+.stock-profile {
+    margin: 12px 0 16px 24px;
+    border: 1px solid #d4e7ff;
+    border-radius: 8px;
+    background: #fafbff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+.stock-profile summary {
+    padding: 10px 14px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #2c5282;
+    font-size: 14px;
+    user-select: none;
+    list-style: none;
+}
+.stock-profile summary::-webkit-details-marker { display: none; }
+.stock-profile summary::before {
+    content: "▶ ";
+    font-size: 11px;
+    margin-right: 4px;
+    transition: transform 0.2s;
+    display: inline-block;
+}
+.stock-profile[open] summary::before {
+    transform: rotate(90deg);
+}
+.stock-profile summary:hover {
+    background: #eef4ff;
+}
+.profile-body {
+    padding: 8px 16px 14px;
+    font-size: 13px;
+    color: #2d3748;
+    line-height: 1.7;
+}
+.profile-body p { margin: 6px 0; }
+.profile-body .label {
+    color: #718096;
+    font-weight: 500;
+    min-width: 60px;
+    display: inline-block;
+}
+.profile-body .biz {
+    background: #fff;
+    padding: 6px 10px;
+    border-left: 3px solid #3182ce;
+    border-radius: 4px;
+    margin: 6px 0;
+}
+.profile-body .catalyst {
+    background: #fff7e6;
+    padding: 8px 12px;
+    border-left: 3px solid #f6ad55;
+    border-radius: 4px;
+    margin: 8px 0;
+    font-weight: 500;
+}
+.profile-body .pattern-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 8px 0;
+}
+.profile-body .pattern-tag {
+    background: #e6fffa;
+    color: #234e52;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    border: 1px solid #b2f5ea;
+}
+.profile-body .pattern-tag.warn {
+    background: #fff5f5;
+    color: #742a2a;
+    border-color: #fc8181;
+}
+.profile-body .metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 8px;
+    margin: 10px 0;
+}
+.profile-body .metric {
+    background: #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+    text-align: center;
+}
+.profile-body .metric .v {
+    font-weight: 600;
+    color: #2c5282;
+    display: block;
+    font-size: 14px;
+}
+.profile-body .metric .k {
+    color: #718096;
+    font-size: 11px;
+}
+.profile-body .risk-box {
+    background: #fff5f5;
+    padding: 8px 12px;
+    border-left: 3px solid #e53e3e;
+    border-radius: 4px;
+    margin: 8px 0;
+    font-size: 12px;
+    color: #742a2a;
+}
+.profile-body .concept-tags {
+    margin: 6px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+.profile-body .concept-tag {
+    background: #ebf8ff;
+    color: #2c5282;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+}
+.profile-body .reports-list {
+    margin: 6px 0;
+    font-size: 11px;
+    color: #4a5568;
+}
+.profile-body .reports-list li {
+    padding: 2px 0;
+}
+/* === 🆕 产业链推理盒子 (LLM 生成) === */
+.profile-body .chain-box {
+    background: linear-gradient(135deg, #fff5e6 0%, #fff 100%);
+    padding: 12px 14px;
+    border-left: 4px solid #ed8936;
+    border-radius: 6px;
+    margin: 10px 0;
+    box-shadow: 0 1px 3px rgba(237, 137, 54, 0.15);
+}
+.profile-body .chain-flow {
+    font-weight: 600;
+    color: #7c2d12;
+    font-size: 14px;
+    margin-bottom: 6px;
+    line-height: 1.5;
+}
+.profile-body .chain-key {
+    color: #2c5282;
+    font-size: 13px;
+    margin: 6px 0;
+    padding: 4px 0;
+    border-bottom: 1px dashed #e2e8f0;
+}
+.profile-body .chain-narrative {
+    color: #2d3748;
+    font-size: 12.5px;
+    line-height: 1.7;
+    margin: 8px 0;
+    text-align: justify;
+}
+.profile-body .chain-meta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+    font-size: 11.5px;
+}
+.profile-body .chain-meta .moat {
+    background: #e6fffa;
+    color: #234e52;
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+.profile-body .chain-meta .img-level {
+    background: #ebf4ff;
+    color: #2c5282;
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+</style></head>
+<body>
+<div style="background:#3a1a1a;border-left:5px solid #ff5555;padding:12px 20px;margin:0 0 20px 0;color:#ffaaaa;font-size:14px;">
+⚠️ <strong>风险提示</strong>: 本报告仅作学习交流，不构成投资建议。股市有风险，决策风险自担。
+</div>
+
+<div class="layout">
+
+    <nav class="sidebar">
+      <h2>📅 历史报告</h2>
+      <a href="2026-06-01.html" class="active">📊 2026-06-01</a>
+<a href="2026-05-29.html" class="">📊 2026-05-29</a>
+<a href="2026-05-27.html" class="">📊 2026-05-27</a>
+    </nav>
+    <main class="main">
+      <div class="header">
+        <div class="title">🎯 A股龙头复盘 · 2026-06-01</div>
+        <div class="subtitle">生成 15:02:06</div>
+      </div>
+      
+    <div class="sentiment">
+      <div class="sentiment-score">
+        <div class="sentiment-num heat-hot">67°</div>
+        <div class="sentiment-stage score-11">⚡ 发酵期</div>
+      </div>
+      <div class="sentiment-metrics">
+        <div class="metric">
+          <div class="metric-label">涨停 / 跌停</div>
+          <div class="metric-value">120 / 0</div>
+          <div class="metric-extra">剔除ST/新股 120</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">连板高度</div>
+          <div class="metric-value">4 板</div>
+          <div class="metric-extra">4板×2 · 3板×1 · 2板×8 · 1板×109 <span style="color:#22c55e">✓ 完整</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">⭐ 晋级率</div>
+          <div class="metric-value">22.4%</div>
+          <div class="metric-extra">昨49→今11</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">炸板率</div>
+          <div class="metric-value">42.5%</div>
+          <div class="metric-extra">51 只触板未封</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="theme-card">
+      <div class="theme-header">
+        <div class="theme-name">▼ AI算力</div>
+        <div class="theme-stage score-11">14/18 · ⚡ 健康发酵</div>
+      </div>
+      <div class="theme-body">
+        <div class="theme-info-row">
+          <span><strong>15</strong> 只涨停</span>
+          <span>最高 <strong>2</strong> 板</span>
+          <span>总封单 <strong>21.68亿</strong></span>
+          
+        </div>
+        
+        <div class="catalyst">
+          <span class="catalyst-label">💡 催化原因</span>
+          戴尔AI服务器排产放量 / 人形机器人量产前夕 / AI服务器液冷渗透
+        </div>
+        
+        <div class="score-bars">
+        <div class="score-bar">
+          <div class="score-bar-label">催化</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-3"></div></div>
+          <div class="score-bar-value">3/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">梯队</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">封单</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-3"></div></div>
+          <div class="score-bar-value">3/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">资金</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">空间</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-3"></div></div>
+          <div class="score-bar-value">3/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">外溢</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-3"></div></div>
+          <div class="score-bar-value">3/3</div>
+        </div>
+        </div>
+        <div class="advice-box"><span class="advice-position pos-中信号">🎯 中信号</span><span style="color:#b8bfd0;margin-left:10px;font-size:13px">关注中军接续表现</span><ul class="advice-list"><li class="buy">✅ ⭐ 二板定龙头【春秋电子】是重点（最佳介入期）</li><li class="buy">✅ 跟风首板可观察次日二板晋级</li></ul></div>
+        
+    <div class="ladder-section">
+      <div class="ladder-title">🐲 龙头 <small>题材最高板</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="boards-tag">2板</span><span class="stock-name">春秋电子</span> <span class="stock-code">603890</span></td>
+      <td>5.25亿</td>
+      <td>09:25:02</td>
+      <td>1.0%</td>
+      <td>122亿</td>
+      <td> </td>
+    </tr>
+    </tbody>
+      </table>
+    </div>
+    
+    <div class="ladder-section">
+      <div class="ladder-title">👥 跟风 <small>早盘<10:00封·封单≥1500万</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="stock-name">华勤技术</span> <span class="stock-code">603296</span></td>
+      <td>3.23亿</td>
+      <td>09:44:48</td>
+      <td>4.4%</td>
+      <td>668亿</td>
+      <td> </td>
+    </tr>
+    
+    <tr class="profile-row"><td colspan="6" style="padding:0;background:transparent">
+      <details class="stock-profile"><summary>🐉 华勤技术 (603296) · 🥈 中军 71.3分 · 30 秒读懂</summary><div class="profile-body"><p class="biz">📖 <b>主营</b>: 从事智能硬件产品的研发设计、生产制造和运营服务的平台型公司</p><div class="chain-box"><div class="chain-flow">🔥 <b>产业链推理</b>: AI算力需求爆发 → 数据中心超节点架构 → 全栈交付能力需求 → 华勤技术ODM+系统集成 → 国产算力放量</div><div class="chain-key">🎯 <b>关键位置</b>: 公司是少数具备超节点全栈交付能力的ODM厂商，深度绑定国产算力产业链</div><div class="chain-narrative">AI算力需求持续爆发，数据中心从传统服务器向超节点架构演进，对ODM厂商的全栈交付能力提出更高要求。华勤技术凭借在消费电子ODM领域积累的研发制造能力，横向拓展至数据中心业务，成为少数能提供超节点整机柜、液冷系统等全栈解决方案的厂商。据研报，公司超节点项目已进入出货周期，2026年Q1业绩亮眼，数据中心业务放量驱动全年高增。公司“3+N+3”智能产品平台战略成效显著，消费电子基本盘稳固，AI PC和AI算力双轮驱动，业绩弹性可期。</div><div class="chain-meta"><span class="moat">🛡 超节点全栈交付能力+消费电子ODM规模优势+国产算力生态绑定</span><span class="img-level">🚀 想象空间 8/10 · AI算力是2-3年中周期，超节点架构升级带来结构性机会，但竞争激烈</span></div></div><p><span class="label">🏭 行业:</span> 电子-消费电子-消费电子零部件及组装 · <span class="label">📅 上市:</span> 2023-08-08</p><div class="metrics"><div class="metric"><span class="v">29.7x</span><span class="k">PE-TTM</span></div><div class="metric"><span class="v">4.73x</span><span class="k">PB</span></div><div class="metric"><span class="v">1268亿</span><span class="k">流通市值</span></div><div class="metric"><span class="v">4.3%</span><span class="k">换手率</span></div></div><p><span class="label">📊 技术形态:</span></p><div class="pattern-tags"><span class="pattern-tag">✅ 主力强势 (接口失败, 用封单 3.23亿 推算)</span></div><p><span class="label">📰 研报:</span> 近 90 日 6 篇 (6篇关注)</p><ul class="reports-list"><li>2026-05-22 | 太平洋 | 26Q1业绩亮眼，超节点带来数据中心高增弹性</li><li>2026-05-14 | 中邮证券 | 超节点项目进入出货周期</li><li>2026-05-08 | 东吴证券 | 2026年一季报点评：Q1稳劲开局，数据中心放量驱动全年高增</li></ul><div class="concept-tags">🏷️ <span class="concept-tag">AI算力</span></div><div class="risk-box">⚠️ <b>风险点</b>: 超节点项目出货节奏不及预期，ODM行业毛利率偏低 · 主营业务与题材关联弱, 属概念炒作</div></div></details>
+    </td></tr>
+    
+    <tr>
+      <td><span class="stock-name">圣阳股份</span> <span class="stock-code">002580</span></td>
+      <td>2.18亿</td>
+      <td>09:36:39</td>
+      <td>12.2%</td>
+      <td>121亿</td>
+      <td> </td>
+    </tr>
+    
+    <tr class="profile-row"><td colspan="6" style="padding:0;background:transparent">
+      <details class="stock-profile"><summary>🐉 圣阳股份 (002580) · 🥈 中军 68.7分 · 30 秒读懂</summary><div class="profile-body"><p class="biz">📖 <b>主营</b>: 储能电池及系统的设计、研发、制造和销售</p><div class="chain-box"><div class="chain-flow">🔥 <b>产业链推理</b>: AI算力爆发 → 数据中心功耗激增 → 液冷储能需求爆发 → 储能电池及系统核心供应商 → 圣阳股份</div><div class="chain-key">🎯 <b>关键位置</b>: 公司是储能电池及系统供应商，在数据中心液冷储能领域有布局，受益于AI算力带来的电力需求增长。</div><div class="chain-narrative">AI算力规模2025-2027预计翻10倍，数据中心功耗激增，液冷储能成为刚需。圣阳股份主营储能电池及系统，产品覆盖数据中心备用电源和储能系统，可满足液冷储能需求。公司背靠山东国资，在储能领域有技术积累和客户资源，有望受益于AI算力带来的储能市场扩容。</div><div class="chain-meta"><span class="moat">🛡 山东国资背景 + 储能系统集成能力</span><span class="img-level">🚀 想象空间 5/10 · AI算力是长周期主题，但公司主营与AI算力关联度一般，更多是概念炒作。</span></div></div><p><span class="label">🏭 行业:</span> 电力设备-电池-蓄电池及其他电池 · <span class="label">📅 上市:</span> 2011-05-06</p><div class="metrics"><div class="metric"><span class="v">65.1x</span><span class="k">PE-TTM</span></div><div class="metric"><span class="v">5.03x</span><span class="k">PB</span></div><div class="metric"><span class="v">121亿</span><span class="k">流通市值</span></div><div class="metric"><span class="v">12.2%</span><span class="k">换手率</span></div></div><p><span class="label">📊 技术形态:</span></p><div class="pattern-tags"><span class="pattern-tag">✅ 主力强势 (接口失败, 用封单 2.18亿 推算)</span></div><div class="concept-tags">🏷️ <span class="concept-tag">AI算力</span></div><div class="risk-box">⚠️ <b>风险点</b>: 题材炒作成分大，业绩兑现需验证，且近90天无研报覆盖。 · 主营业务与题材关联弱, 属概念炒作 · 机构研报覆盖少, 缺乏基本面支撑</div></div></details>
+    </td></tr>
+    
+    <tr>
+      <td><span class="stock-name">达实智能</span> <span class="stock-code">002421</span></td>
+      <td>2.03亿</td>
+      <td>09:41:48</td>
+      <td>18.5%</td>
+      <td>91亿</td>
+      <td> </td>
+    </tr>
+    
+    <tr class="profile-row"><td colspan="6" style="padding:0;background:transparent">
+      <details class="stock-profile"><summary>🐉 达实智能 (002421) · 🥇 真龙头 88.7分 · 30 秒读懂</summary><div class="profile-body"><p class="biz">📖 <b>主营</b>: 基于自主研发的AIoT智能物联网平台、智能终端产品及相关应用系统，为用户提供全生命周期的智慧服务</p><div class="chain-box"><div class="chain-flow">🔥 <b>产业链推理</b>: AI算力爆发 → 数据中心功耗激增 → 液冷散热刚需 → 公司AIoT平台+液冷方案 → 智能管控降本增效</div><div class="chain-key">🎯 <b>关键位置</b>: 公司AIoT平台整合液冷服务器监控与节能优化，是数据中心绿色化关键环节</div><div class="chain-narrative">随着AI算力需求爆发，数据中心功耗激增，传统风冷已无法满足散热需求，液冷成为刚需。达实智能基于自研AIoT智能物联网平台，提供包括液冷服务器在内的数据中心智能管控解决方案，通过实时监控和AI算法优化冷却系统能耗，实现PUE降低15%-30%。公司同时布局机器人（智能巡检）和AI应用（建筑节能），形成智慧城市综合服务能力。虽然近期无研报覆盖，但行业普遍认为液冷渗透率将从2024年不足10%提升至2027年超30%，公司作为少数具备AIoT+液冷整合能力的企业，有望受益于数据中心绿色化趋势。</div><div class="chain-meta"><span class="moat">🛡 自研AIoT平台+液冷系统集成能力，形成软硬一体解决方案壁垒</span><span class="img-level">🚀 想象空间 7/10 · AI算力是2-3年中周期，液冷渗透率提升确定性高，但公司主业分散，弹性需验证</span></div></div><p><span class="label">🏭 行业:</span> 计算机-IT服务Ⅱ-IT服务Ⅲ · <span class="label">📅 上市:</span> 2010-06-03</p><div class="metrics"><div class="metric"><span class="v">-15.3x</span><span class="k">PE-TTM</span></div><div class="metric"><span class="v">3.53x</span><span class="k">PB</span></div><div class="metric"><span class="v">96亿</span><span class="k">流通市值</span></div><div class="metric"><span class="v">18.4%</span><span class="k">换手率</span></div></div><p><span class="label">📊 技术形态:</span></p><div class="pattern-tags"><span class="pattern-tag">✅ 主力强势 (接口失败, 用封单 2.03亿 推算)</span></div><div class="concept-tags">🏷️ <span class="concept-tag">AI算力</span></div><div class="risk-box">⚠️ <b>风险点</b>: 液冷业务占比未披露，业绩兑现依赖订单落地，且无近期研报支撑 · 机构研报覆盖少, 缺乏基本面支撑</div></div></details>
+    </td></tr>
+    
+    <tr>
+      <td><span class="stock-name">软通动力</span> <span class="stock-code">301236</span></td>
+      <td>1.61亿</td>
+      <td>09:43:03</td>
+      <td>4.8%</td>
+      <td>312亿</td>
+      <td> </td>
+    </tr>
+    
+    <tr class="profile-row"><td colspan="6" style="padding:0;background:transparent">
+      <details class="stock-profile"><summary>🐉 软通动力 (301236) · 🥈 中军 68.7分 · 30 秒读懂</summary><div class="profile-body"><p class="biz">📖 <b>主营</b>: 为通讯设备、互联网服务、金融、高科技与制造等多个行业客户提供端到端的软件与数字技术服务和数字化运营服</p><div class="chain-box"><div class="chain-flow">🔥 <b>产业链推理</b>: AI算力需求爆发 → 算力租赁与Token工厂需求增长 → 软通动力中标大单 → 软硬协同全栈AI服务商</div><div class="chain-key">🎯 <b>关键位置</b>: 公司是华为生态核心合作伙伴，具备从算力租赁到AI应用的全栈服务能力，近期中标大单验证业绩弹性</div><div class="chain-narrative">AI算力需求持续爆发，企业纷纷布局大模型训练与推理，算力租赁和Token工厂模式兴起。软通动力作为华为生态核心合作伙伴，具备从硬件（服务器、PC）到软件（AI平台、应用）的全栈服务能力。公司近期中标多个算力大单，并推出Token工厂服务，直接受益于AI算力产业链的中间环节需求增长。据研报，公司战略转型聚焦AI，软硬协同布局有望打开增长空间，业绩兑现路径清晰。</div><div class="chain-meta"><span class="moat">🛡 华为生态深度绑定 + 全栈AI服务能力 + 大客户资源壁垒</span><span class="img-level">🚀 想象空间 7/10 · AI算力是2-3年中周期，公司作为IT服务商受益于算力基建，但竞争激烈且业绩弹性受制于订单确认节奏</span></div></div><p><span class="label">🏭 行业:</span> 计算机-IT服务Ⅱ-IT服务Ⅲ · <span class="label">📅 上市:</span> 2022-03-15</p><div class="metrics"><div class="metric"><span class="v">761.4x</span><span class="k">PE-TTM</span></div><div class="metric"><span class="v">3.07x</span><span class="k">PB</span></div><div class="metric"><span class="v">410亿</span><span class="k">流通市值</span></div><div class="metric"><span class="v">4.8%</span><span class="k">换手率</span></div></div><p><span class="label">📰 研报:</span> 近 90 日 3 篇 (2篇增持 / 1篇关注)</p><ul class="reports-list"><li>2026-05-13 | 中邮证券 | 战略转型致利润短期承压，AI算力打开增长空间</li><li>2026-05-07 | 中银证券 | 营收稳步增长，AI赋能战略效果显著</li><li>2026-04-20 | 国金证券 | 软硬协同，全栈AI IT服务商再启航</li></ul><div class="concept-tags">🏷️ <span class="concept-tag">AI算力</span></div><div class="risk-box">⚠️ <b>风险点</b>: 战略转型期利润承压，算力租赁业务毛利率较低，业绩兑现需持续跟踪大单落地 · 主营业务与题材关联弱, 属概念炒作</div></div></details>
+    </td></tr>
+    
+    <tr>
+      <td><span class="stock-name">鸿博股份</span> <span class="stock-code">002229</span></td>
+      <td>1.12亿</td>
+      <td>09:41:18</td>
+      <td>9.2%</td>
+      <td>71亿</td>
+      <td><span class="warn-tag">⚠1炸</span> </td>
+    </tr>
+    
+    <tr class="profile-row"><td colspan="6" style="padding:0;background:transparent">
+      <details class="stock-profile"><summary>🐉 鸿博股份 (002229) · 🥈 中军 67.8分 · 30 秒读懂</summary><div class="profile-body"><p class="biz">📖 <b>主营</b>: 开展票据票证印刷与高端包装印刷、网络技术服务与电子彩票代购及彩种研发、RFID智能标签制作等业务</p><div class="chain-box"><div class="chain-flow">🔥 <b>产业链推理</b>: AI算力需求爆发 → 算力租赁市场扩张 → 公司转型算力服务商 → 英伟达合作+智算中心建设 → 彩票印刷主业提供现金流支撑</div><div class="chain-key">🎯 <b>关键位置</b>: 公司从彩票印刷跨界AI算力租赁，与英伟达合作建立智算中心，成为算力新贵</div><div class="chain-narrative">AI算力需求爆发式增长，算力租赁成为稀缺资源。鸿博股份原为彩票印刷龙头，2022年宣布跨界AI算力，与英伟达合作在多地建设智算中心，提供算力租赁服务。公司凭借英伟达GPU资源获取和地方政府合作优势，快速切入算力市场。彩票印刷主业提供稳定现金流，支撑算力业务扩张。尽管近90天无研报覆盖，但市场对其算力业务想象空间较大，股价随AI算力题材反复活跃。</div><div class="chain-meta"><span class="moat">🛡 与英伟达深度合作获取GPU资源 + 多地智算中心布局</span><span class="img-level">🚀 想象空间 7/10 · AI算力是2-3年中周期，公司转型算力服务商具备一定稀缺性，但竞争激烈</span></div></div><p><span class="label">🏭 行业:</span> 轻工制造-包装印刷-印刷 · <span class="label">📅 上市:</span> 2008-05-08</p><div class="metrics"><div class="metric"><span class="v">-27.1x</span><span class="k">PE-TTM</span></div><div class="metric"><span class="v">6.63x</span><span class="k">PB</span></div><div class="metric"><span class="v">71亿</span><span class="k">流通市值</span></div><div class="metric"><span class="v">9.2%</span><span class="k">换手率</span></div></div><div class="concept-tags">🏷️ <span class="concept-tag">AI算力</span></div><div class="risk-box">⚠️ <b>风险点</b>: 算力业务尚处投入期，业绩兑现存不确定性，且无近期研报验证 · 主营业务与题材关联弱, 属概念炒作 · 机构研报覆盖少, 缺乏基本面支撑</div></div></details>
+    </td></tr>
+    </tbody>
+      </table>
+    </div>
+    
+    <div class="ladder-section">
+      <div class="ladder-title">👁 首板观察 <small>封晚/封弱·待次日二板验证</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="stock-name">顺钠股份</span> <span class="stock-code">000533</span></td>
+      <td>1.48亿</td>
+      <td>10:08:03</td>
+      <td>7.7%</td>
+      <td>87亿</td>
+      <td> <span class="reason-tag">·10:08:03才封</span></td>
+    </tr>
+    
+    <tr class="profile-row"><td colspan="6" style="padding:0;background:transparent">
+      <details class="stock-profile"><summary>🐉 顺钠股份 (000533) · 🥈 中军 71.3分 · 30 秒读懂</summary><div class="profile-body"><p class="biz">📖 <b>主营</b>: 城网输配电设备和卫厨燃气具家电产品的生产和销售，精密加工机械装备及通信设备的生产和销售</p><div class="chain-box"><div class="chain-flow">🔥 <b>产业链推理</b>: AI算力爆发 → 数据中心建设加速 → 电力需求激增 → 干式变压器需求增长 → 顺钠股份主营干式变压器</div><div class="chain-key">🎯 <b>关键位置</b>: 公司主营干式变压器，是数据中心电力系统的关键设备，受益于AI算力带动的数据中心建设潮</div><div class="chain-narrative">AI算力爆发驱动数据中心建设加速，数据中心电力系统对干式变压器需求激增。干式变压器具有安全、环保、节能等优势，是数据中心配电系统的核心设备。顺钠股份主营干式变压器等输配电设备，产品广泛应用于数据中心、电网等领域。公司还积极布局海外市场，有望受益于全球数据中心建设浪潮。尽管近期无研报覆盖，但题材契合度高，资金关注度提升，业绩兑现需关注订单落地情况。</div><div class="chain-meta"><span class="moat">🛡 干式变压器技术积累+数据中心客户资源</span><span class="img-level">🚀 想象空间 6/10 · AI算力是长周期主题，但公司业务与AI直接关联度有限，更多是间接受益于数据中心建设</span></div></div><p><span class="label">🏭 行业:</span> 电力设备-电网设备-输变电设备 · <span class="label">📅 上市:</span> 1994-01-03</p><div class="metrics"><div class="metric"><span class="v">88.2x</span><span class="k">PE-TTM</span></div><div class="metric"><span class="v">8.89x</span><span class="k">PB</span></div><div class="metric"><span class="v">88亿</span><span class="k">流通市值</span></div><div class="metric"><span class="v">7.7%</span><span class="k">换手率</span></div></div><div class="concept-tags">🏷️ <span class="concept-tag">AI算力</span></div><div class="risk-box">⚠️ <b>风险点</b>: 题材炒作成分较大，业绩兑现需验证，且公司有股权拍卖等不确定性因素 · 机构研报覆盖少, 缺乏基本面支撑</div></div></details>
+    </td></tr>
+    </tbody>
+      </table>
+    </div>
+    
+      </div>
+    </div>
+    
+    <div class="theme-card">
+      <div class="theme-header">
+        <div class="theme-name">▼ 机器人</div>
+        <div class="theme-stage score-11">14/18 · ⚡ 健康发酵</div>
+      </div>
+      <div class="theme-body">
+        <div class="theme-info-row">
+          <span><strong>13</strong> 只涨停</span>
+          <span>最高 <strong>2</strong> 板</span>
+          <span>总封单 <strong>11.02亿</strong></span>
+          
+        </div>
+        
+        <div class="catalyst">
+          <span class="catalyst-label">💡 催化原因</span>
+          戴尔AI服务器排产放量 / 人形机器人量产前夕
+        </div>
+        
+        <div class="score-bars">
+        <div class="score-bar">
+          <div class="score-bar-label">催化</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-3"></div></div>
+          <div class="score-bar-value">3/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">梯队</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">封单</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-3"></div></div>
+          <div class="score-bar-value">3/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">资金</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">空间</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-3"></div></div>
+          <div class="score-bar-value">3/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">外溢</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-3"></div></div>
+          <div class="score-bar-value">3/3</div>
+        </div>
+        </div>
+        <div class="advice-box"><span class="advice-position pos-中信号">🎯 中信号</span><span style="color:#b8bfd0;margin-left:10px;font-size:13px">关注中军接续表现</span><ul class="advice-list"><li class="buy">✅ ⭐ 二板定龙头【春秋电子】是重点（最佳介入期）</li><li class="buy">✅ 跟风首板可观察次日二板晋级</li></ul></div>
+        
+    <div class="ladder-section">
+      <div class="ladder-title">🐲 龙头 <small>题材最高板</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="boards-tag">2板</span><span class="stock-name">春秋电子</span> <span class="stock-code">603890</span></td>
+      <td>5.25亿</td>
+      <td>09:25:02</td>
+      <td>1.0%</td>
+      <td>122亿</td>
+      <td> </td>
+    </tr>
+    </tbody>
+      </table>
+    </div>
+    
+    <div class="ladder-section">
+      <div class="ladder-title">👥 跟风 <small>早盘<10:00封·封单≥1500万</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="stock-name">龙旗科技</span> <span class="stock-code">603341</span></td>
+      <td>8487万</td>
+      <td>09:42:47</td>
+      <td>5.1%</td>
+      <td>101亿</td>
+      <td><span class="warn-tag">⚠2炸</span> </td>
+    </tr>
+    
+    <tr>
+      <td><span class="stock-name">京基智农</span> <span class="stock-code">000048</span></td>
+      <td>7136万</td>
+      <td>09:37:45</td>
+      <td>1.6%</td>
+      <td>73亿</td>
+      <td> </td>
+    </tr>
+    
+    <tr>
+      <td><span class="stock-name">新安股份</span> <span class="stock-code">600596</span></td>
+      <td>3541万</td>
+      <td>09:50:45</td>
+      <td>4.3%</td>
+      <td>179亿</td>
+      <td><span class="warn-tag">⚠2炸</span> </td>
+    </tr>
+    
+    <tr>
+      <td><span class="stock-name">华丽家族</span> <span class="stock-code">600503</span></td>
+      <td>3438万</td>
+      <td>09:46:55</td>
+      <td>5.0%</td>
+      <td>47亿</td>
+      <td> </td>
+    </tr>
+    
+    <tr>
+      <td><span class="stock-name">宏润建设</span> <span class="stock-code">002062</span></td>
+      <td>3147万</td>
+      <td>09:51:36</td>
+      <td>4.3%</td>
+      <td>101亿</td>
+      <td><span class="warn-tag">⚠3炸</span> </td>
+    </tr>
+    </tbody>
+      </table>
+    </div>
+    
+    <div class="ladder-section">
+      <div class="ladder-title">👁 首板观察 <small>封晚/封弱·待次日二板验证</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="stock-name">新时达</span> <span class="stock-code">002527</span></td>
+      <td>6485万</td>
+      <td>10:06:18</td>
+      <td>8.3%</td>
+      <td>82亿</td>
+      <td> <span class="reason-tag">·10:06:18才封</span></td>
+    </tr>
+    
+    <tr>
+      <td><span class="stock-name">郑州煤电</span> <span class="stock-code">600121</span></td>
+      <td>6432万</td>
+      <td>10:38:46</td>
+      <td>10.1%</td>
+      <td>57亿</td>
+      <td> <span class="reason-tag">·10:38:46才封</span></td>
+    </tr>
+    
+    <tr>
+      <td><span class="stock-name">瑜欣电子</span> <span class="stock-code">301107</span></td>
+      <td>4940万</td>
+      <td>10:03:24</td>
+      <td>11.2%</td>
+      <td>19亿</td>
+      <td> <span class="reason-tag">·10:03:24才封</span></td>
+    </tr>
+    </tbody>
+      </table>
+    </div>
+    
+      </div>
+    </div>
+    
+    <div class="theme-card">
+      <div class="theme-header">
+        <div class="theme-name">▼ 光通信铜缆</div>
+        <div class="theme-stage score-7">9/18 · ⚠ 分歧观察</div>
+      </div>
+      <div class="theme-body">
+        <div class="theme-info-row">
+          <span><strong>4</strong> 只涨停</span>
+          <span>最高 <strong>4</strong> 板</span>
+          <span>总封单 <strong>9.06亿</strong></span>
+          <span style="color:#f59e0b;font-size:12px;margin-left:14px">⚠ 短板：空间小(高位) / 催化老</span>
+        </div>
+        
+        <div class="catalyst">
+          <span class="catalyst-label">💡 催化原因</span>
+          戴尔AI服务器排产放量 / 人形机器人量产前夕 / 戴尔产业链（AI服务器订单催化）
+        </div>
+        
+        <div class="score-bars">
+        <div class="score-bar">
+          <div class="score-bar-label">催化</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">梯队</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-3"></div></div>
+          <div class="score-bar-value">3/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">封单</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-2"></div></div>
+          <div class="score-bar-value">2/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">资金</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">空间</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">外溢</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        </div>
+        <div class="advice-box"><span class="advice-position pos-观察">🎯 观察</span><span style="color:#b8bfd0;margin-left:10px;font-size:13px">仅关注龙头位·谨慎</span><ul class="advice-list"><li class="buy">✅ 龙头【合锻智能】4板盘中分歧位关注度高</li><li class="buy">✅ 中军强信号位（如 春秋电子）</li></ul></div>
+        
+    <div class="ladder-section">
+      <div class="ladder-title">🐲 龙头 <small>题材最高板</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="boards-tag">4板</span><span class="stock-name">合锻智能</span> <span class="stock-code">603011</span></td>
+      <td>2.34亿</td>
+      <td>09:31:09</td>
+      <td>7.0%</td>
+      <td>136亿</td>
+      <td><span class="warn-tag">⚠1炸</span> </td>
+    </tr>
+    
+    <tr class="profile-row"><td colspan="6" style="padding:0;background:transparent">
+      <details class="stock-profile"><summary>🐉 合锻智能 (603011) · 🥈 中军 77.4分 · 30 秒读懂</summary><div class="profile-body"><p class="biz">📖 <b>主营</b>: 为客户提供液压机、机械压力机、色选机、移动式破碎筛分装备、智能化集成控制及新材料等产品及服务</p><div class="chain-box"><div class="chain-flow">🔥 <b>产业链推理</b>: AI算力需求爆发 → 数据中心互联带宽瓶颈 → 铜缆高速连接方案受青睐 → 合锻智能提供铜缆生产设备 → 设备需求增长</div><div class="chain-key">🎯 <b>关键位置</b>: 公司为铜缆高速连接器提供精密冲压设备，是产业链上游关键设备供应商</div><div class="chain-narrative">随着AI算力需求爆发，数据中心内部及之间的互联带宽成为瓶颈。铜缆高速连接方案因成本低、功耗小、传输稳定，在短距离互联中优势明显，需求激增。合锻智能主营液压机、机械压力机等设备，其精密冲压设备可用于生产铜缆连接器中的金属件，如外壳、端子等。尽管公司未直接生产铜缆，但作为上游设备供应商，有望受益于铜缆扩产带来的设备采购需求。行业普遍认为，铜缆高速连接市场2024-2025年将快速增长，带动相关设备订单。公司技术积累深厚，客户覆盖多家连接器厂商，业绩弹性可期。</div><div class="chain-meta"><span class="moat">🛡 精密冲压设备技术壁垒高，客户认证周期长</span><span class="img-level">🚀 想象空间 5/10 · 铜缆题材属中短期主题，设备需求弹性有限，非AI算力核心环节</span></div></div><p><span class="label">🏭 行业:</span> 机械设备-专用设备-其他专用设备 · <span class="label">📅 上市:</span> 2014-11-07</p><div class="metrics"><div class="metric"><span class="v">-47.6x</span><span class="k">PE-TTM</span></div><div class="metric"><span class="v">7.27x</span><span class="k">PB</span></div><div class="metric"><span class="v">136亿</span><span class="k">流通市值</span></div><div class="metric"><span class="v">7.0%</span><span class="k">换手率</span></div></div><p><span class="label">📊 技术形态:</span></p><div class="pattern-tags"><span class="pattern-tag">⏳ 接近前高 (差 -2.0%)</span><span class="pattern-tag">✅ 主力强势 (接口失败, 用封单 2.34亿 推算)</span></div><div class="concept-tags">🏷️ <span class="concept-tag">光通信铜缆</span></div><div class="risk-box">⚠️ <b>风险点</b>: 铜缆题材与主营关联度较低，业绩兑现需验证设备订单落地 · 主营业务与题材关联弱, 属概念炒作 · 机构研报覆盖少, 缺乏基本面支撑</div></div></details>
+    </td></tr>
+    </tbody>
+      </table>
+    </div>
+    
+    <div class="ladder-section">
+      <div class="ladder-title">🛡 中军 <small>次高连板·机构候选</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="boards-tag">2板</span><span class="stock-name">春秋电子</span> <span class="stock-code">603890</span></td>
+      <td>5.25亿</td>
+      <td>09:25:02</td>
+      <td>1.0%</td>
+      <td>122亿</td>
+      <td> </td>
+    </tr>
+    
+    <tr>
+      <td><span class="boards-tag">2板</span><span class="stock-name">泓淋电力</span> <span class="stock-code">301439</span></td>
+      <td>8727万</td>
+      <td>10:03:12</td>
+      <td>30.1%</td>
+      <td>43亿</td>
+      <td> </td>
+    </tr>
+    
+    <tr class="profile-row"><td colspan="6" style="padding:0;background:transparent">
+      <details class="stock-profile"><summary>🐉 泓淋电力 (301439) · 🥈 中军 66.1分 · 30 秒读懂</summary><div class="profile-body"><p class="biz">📖 <b>主营</b>: 从事电源线组件和特种线缆的研发、生产和销售</p><div class="chain-box"><div class="chain-flow">🔥 <b>产业链推理</b>: AI算力爆发 → 数据中心高速互联 → 铜缆替代部分光缆 → 电源线组件需求增长 → 泓淋电力受益</div><div class="chain-key">🎯 <b>关键位置</b>: 公司主营电源线组件和特种线缆，是数据中心铜缆连接的关键供应商</div><div class="chain-narrative">随着AI算力规模爆发，数据中心内部高速互联需求激增。虽然光通信是主流，但短距离场景下铜缆因成本低、功耗小仍被广泛采用，尤其电源线组件是服务器机柜必备。泓淋电力深耕电源线组件和特种线缆，产品覆盖数据中心、通信基站等领域。近期市场炒作光通信铜缆题材，公司作为线缆部件厂商直接受益，但题材与主营关联度一般，属概念炒作。</div><div class="chain-meta"><span class="moat">🛡 线缆行业壁垒较低，公司无显著护城河</span><span class="img-level">🚀 想象空间 3/10 · 铜缆题材属光通信分支，但公司主营非核心环节，想象空间有限</span></div></div><p><span class="label">🏭 行业:</span> 电力设备-电网设备-线缆部件及其他 · <span class="label">📅 上市:</span> 2023-03-17</p><div class="metrics"><div class="metric"><span class="v">44.5x</span><span class="k">PE-TTM</span></div><div class="metric"><span class="v">3.08x</span><span class="k">PB</span></div><div class="metric"><span class="v">91亿</span><span class="k">流通市值</span></div><div class="metric"><span class="v">30.1%</span><span class="k">换手率</span></div></div><p><span class="label">📊 技术形态:</span></p><div class="pattern-tags"><span class="pattern-tag">✅ 突破前高 (+20.0% · 量比 8.7×)</span><span class="pattern-tag">✅ 创 60 日新高</span><span class="pattern-tag">✅ 主力 5 日净流入 +2.06亿 (3/5 日为正)</span></div><div class="concept-tags">🏷️ <span class="concept-tag">光通信铜缆</span></div><div class="risk-box">⚠️ <b>风险点</b>: 题材与主营关联牵强，属概念炒作，业绩兑现难度大 · 主营业务与题材关联弱, 属概念炒作 · 机构研报覆盖少, 缺乏基本面支撑</div></div></details>
+    </td></tr>
+    </tbody>
+      </table>
+    </div>
+    
+    <div class="ladder-section">
+      <div class="ladder-title">👥 跟风 <small>早盘<10:00封·封单≥1500万</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="stock-name">中京电子</span> <span class="stock-code">002579</span></td>
+      <td>5910万</td>
+      <td>09:53:09</td>
+      <td>35.7%</td>
+      <td>110亿</td>
+      <td><span class="warn-tag">⚠4炸</span> </td>
+    </tr>
+    </tbody>
+      </table>
+    </div>
+    
+      </div>
+    </div>
+    
+    <div class="theme-card">
+      <div class="theme-header">
+        <div class="theme-name">▼ 电力</div>
+        <div class="theme-stage score-7">9/18 · ⚠ 分歧观察</div>
+      </div>
+      <div class="theme-body">
+        <div class="theme-info-row">
+          <span><strong>6</strong> 只涨停</span>
+          <span>最高 <strong>4</strong> 板</span>
+          <span>总封单 <strong>3.36亿</strong></span>
+          <span style="color:#f59e0b;font-size:12px;margin-left:14px">⚠ 短板：空间小(高位) / 封单弱</span>
+        </div>
+        
+        <div class="catalyst">
+          <span class="catalyst-label">💡 催化原因</span>
+          电力需求增长 / 电改预期 / 业绩拐点
+        </div>
+        
+        <div class="score-bars">
+        <div class="score-bar">
+          <div class="score-bar-label">催化</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-2"></div></div>
+          <div class="score-bar-value">2/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">梯队</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-3"></div></div>
+          <div class="score-bar-value">3/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">封单</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-0"></div></div>
+          <div class="score-bar-value">0/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">资金</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">空间</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">外溢</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-2"></div></div>
+          <div class="score-bar-value">2/3</div>
+        </div>
+        </div>
+        <div class="advice-box"><span class="advice-position pos-观察">🎯 观察</span><span style="color:#b8bfd0;margin-left:10px;font-size:13px">仅关注龙头位·谨慎</span><ul class="advice-list"><li class="buy">✅ 龙头【粤电力Ａ】4板盘中分歧位关注度高</li><li class="buy">✅ 中军强信号位（如 江苏国信）</li></ul></div>
+        
+    <div class="ladder-section">
+      <div class="ladder-title">🐲 龙头 <small>题材最高板</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="boards-tag">4板</span><span class="stock-name">粤电力Ａ</span> <span class="stock-code">000539</span></td>
+      <td>2149万</td>
+      <td>09:25:00</td>
+      <td>18.6%</td>
+      <td>250亿</td>
+      <td><span class="warn-tag">⚠107炸</span> </td>
+    </tr>
+    
+    <tr class="profile-row"><td colspan="6" style="padding:0;background:transparent">
+      <details class="stock-profile"><summary>🐉 粤电力Ａ (000539) · 🥈 中军 66.1分 · 30 秒读懂</summary><div class="profile-body"><p class="biz">📖 <b>主营</b>: 电力项目、新能源项目的投资、建设和经营管理，电力的生产和销售业务</p><div class="chain-box"><div class="chain-flow">🔥 <b>产业链推理</b>: 经济复苏用电需求增长 → 煤价下行成本改善 → 火电企业盈利修复 → 粤电力A弹性标的</div><div class="chain-key">🎯 <b>关键位置</b>: 公司是广东省最大电力上市公司，火电装机占比高，煤价下行弹性最大</div><div class="chain-narrative">2025年经济复苏预期下，全社会用电量增速有望回升，叠加煤价持续下行，火电企业成本端显著改善。据研报，煤电成本改善可对冲电价下行，电价已触底静待拐点。粤电力A作为广东省最大电力上市公司，火电装机占比超80%，对煤价敏感度高，在煤价下行周期中盈利弹性最大。公司同时布局新能源项目，长期成长性可期。</div><div class="chain-meta"><span class="moat">🛡 广东省区域垄断地位 + 大股东支持 + 新能源转型</span><span class="img-level">🚀 想象空间 5/10 · 电力行业属周期性主题，煤价下行逻辑可持续1-2年，但缺乏长期成长想象空间</span></div></div><p><span class="label">🏭 行业:</span> 公用事业-电力-火力发电 · <span class="label">📅 上市:</span> 1993-11-26</p><div class="metrics"><div class="metric"><span class="v">61.7x</span><span class="k">PE-TTM</span></div><div class="metric"><span class="v">2.20x</span><span class="k">PB</span></div><div class="metric"><span class="v">513亿</span><span class="k">流通市值</span></div><div class="metric"><span class="v">18.6%</span><span class="k">换手率</span></div></div><p><span class="label">📊 技术形态:</span></p><div class="pattern-tags"><span class="pattern-tag">✅ 突破前高 (+10.0% · 量比 3.8×)</span><span class="pattern-tag">✅ 创 60 日新高</span></div><p><span class="label">📰 研报:</span> 近 90 日 1 篇 (1篇0.1400000000)</p><ul class="reports-list"><li>2026-04-03 | 信达证券 | 煤电成本改善对冲电价下行，电价触底静待拐点来临</li></ul><div class="concept-tags">🏷️ <span class="concept-tag">电力</span></div><div class="risk-box">⚠️ <b>风险点</b>: 电价下行超预期或煤价反弹，业绩兑现存在不确定性 · 机构研报覆盖少, 缺乏基本面支撑</div></div></details>
+    </td></tr>
+    </tbody>
+      </table>
+    </div>
+    
+    <div class="ladder-section">
+      <div class="ladder-title">🛡 中军 <small>次高连板·机构候选</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="boards-tag">2板</span><span class="stock-name">江苏国信</span> <span class="stock-code">002608</span></td>
+      <td>1.15亿</td>
+      <td>09:30:09</td>
+      <td>3.9%</td>
+      <td>382亿</td>
+      <td><span class="warn-tag">⚠1炸</span> </td>
+    </tr>
+    
+    <tr>
+      <td><span class="boards-tag">2板</span><span class="stock-name">深南电A</span> <span class="stock-code">000037</span></td>
+      <td>1007万</td>
+      <td>09:52:12</td>
+      <td>30.5%</td>
+      <td>43亿</td>
+      <td><span class="warn-tag">⚠16炸</span> </td>
+    </tr>
+    </tbody>
+      </table>
+    </div>
+    
+    <div class="ladder-section">
+      <div class="ladder-title">👥 跟风 <small>早盘<10:00封·封单≥1500万</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="stock-name">方大集团</span> <span class="stock-code">000055</span></td>
+      <td>2293万</td>
+      <td>09:34:15</td>
+      <td>4.2%</td>
+      <td>26亿</td>
+      <td><span class="warn-tag">⚠1炸</span> </td>
+    </tr>
+    </tbody>
+      </table>
+    </div>
+    
+    <div class="ladder-section">
+      <div class="ladder-title">👁 首板观察 <small>封晚/封弱·待次日二板验证</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="stock-name">湖南发展</span> <span class="stock-code">000722</span></td>
+      <td>1.16亿</td>
+      <td>14:33:45</td>
+      <td>11.8%</td>
+      <td>75亿</td>
+      <td> <span class="reason-tag">·14:33:45才封</span></td>
+    </tr>
+    
+    <tr>
+      <td><span class="stock-name">新集能源</span> <span class="stock-code">601918</span></td>
+      <td>5079万</td>
+      <td>13:59:31</td>
+      <td>5.7%</td>
+      <td>292亿</td>
+      <td> <span class="reason-tag">·13:59:31才封</span></td>
+    </tr>
+    </tbody>
+      </table>
+    </div>
+    
+      </div>
+    </div>
+    <div class="dragon-switch"><h3>🔄 龙头动态切换</h3><div class="fallen"><strong style="color:#f59e0b">📉 老龙降级</strong><ul style="padding-left:22px;line-height:1.9"><li>香江控股 <code style="color:#4d8eff">600162</code> · 原 5板 · 今日未涨停</li><li>华电能源 <code style="color:#4d8eff">600726</code> · 原 5板 · 今日未涨停</li></ul></div><div class="new-candidate" style="margin-top:14px"><strong style="color:#22c55e">🆕 新龙观察（昨1板→今2板）</strong><ul style="padding-left:22px;line-height:1.9"><li>春秋电子 <code style="color:#4d8eff">603890</code> · 封单 5.25亿 · 09:25:02首封</li><li>金 螳 螂 <code style="color:#4d8eff">002081</code> · 封单 1.28亿 · 09:45:48首封</li><li>华能国际 <code style="color:#4d8eff">600011</code> · 封单 1.22亿 · 14:56:15首封</li><li>江苏国信 <code style="color:#4d8eff">002608</code> · 封单 1.15亿 · 09:30:09首封</li><li>晋控电力 <code style="color:#4d8eff">000767</code> · 封单 1.02亿 · 09:31:03首封</li></ul></div></div><div class="intraday-section" style="margin:30px 0;padding:20px;background:#fef9e7;border-left:4px solid #f1c40f;border-radius:6px">
+<h2 style="margin:0 0 12px 0;font-size:18px">⏰ 盘中事件回放</h2>
+<div style="color:#666;font-size:13px;margin-bottom:12px">共 17 条 · 🔴火警 15 · 🟡注意 0 · ⚪信息 2</div>
+<details style="margin:8px 0"><summary style="cursor:pointer;font-weight:600;padding:6px 0">电力 (17 条)</summary>
+<table style="width:100%;border-collapse:collapse;margin-top:8px;font-size:13px">
+<thead><tr style="background:#fff5d6"><th style="padding:6px;text-align:left;width:80px">时间</th><th style="padding:6px;text-align:left;width:60px">级别</th><th style="padding:6px;text-align:left">事件</th><th style="padding:6px;text-align:left;width:180px">建议</th></tr></thead><tbody>
+<tr style="border-top:1px solid #eee"><td style="padding:6px;color:#666">10:45:12</td><td style="padding:6px;color:#e74c3c;font-weight:600">🔴 FIRE</td><td style="padding:6px"><strong>🚨 龙头炸板 粤电力Ａ</strong><br><span style="color:#777;font-size:12px">粤电力Ａ 000539 当前 +9.91%<br>距涨停 -0.10%<br>题材: 电力</span></td><td style="padding:6px;color:#2980b9">立即考虑信号转弱 / 卖出</td></tr>
+<tr style="border-top:1px solid #eee"><td style="padding:6px;color:#666">10:46:22</td><td style="padding:6px;color:#e74c3c;font-weight:600">🔴 FIRE</td><td style="padding:6px"><strong>🚨 龙头炸板 粤电力Ａ</strong><br><span style="color:#777;font-size:12px">粤电力Ａ 000539 当前 +10.02%<br>距涨停 +0.00%<br>题材: 电力</span></td><td style="padding:6px;color:#2980b9">立即考虑信号转弱 / 卖出</td></tr>
+<tr style="border-top:1px solid #eee"><td style="padding:6px;color:#666">10:47:08</td><td style="padding:6px;color:#95a5a6;font-weight:600">⚪ INFO</td><td style="padding:6px"><strong>↓ 电力 涨停 4→2</strong><br><span style="color:#777;font-size:12px">电力 板块涨停数 4 → 2</span></td><td style="padding:6px;color:#2980b9"></td></tr>
+<tr style="border-top:1px solid #eee"><td style="padding:6px;color:#666">10:47:28</td><td style="padding:6px;color:#e74c3c;font-weight:600">🔴 FIRE</td><td style="padding:6px"><strong>🚨 龙头炸板 粤电力Ａ</strong><br><span style="color:#777;font-size:12px">粤电力Ａ 000539 当前 +9.91%<br>距涨停 -0.10%<br>题材: 电力</span></td><td style="padding:6px;color:#2980b9">立即考虑信号转弱 / 卖出</td></tr>
+<tr style="border-top:1px solid #eee"><td style="padding:6px;color:#666">10:48:58</td><td style="padding:6px;color:#95a5a6;font-weight:600">⚪ INFO</td><td style="padding:6px"><strong>↑ 电力 涨停 2→4</strong><br><span style="color:#777;font-size:12px">电力 板块涨停数 2 → 4</span></td><td style="padding:6px;color:#2980b9"></td></tr>
+<tr style="border-top:1px solid #eee"><td style="padding:6px;color:#666">10:49:08</td><td style="padding:6px;color:#e74c3c;font-weight:600">🔴 FIRE</td><td style="padding:6px"><strong>🚨 龙头炸板 粤电力Ａ</strong><br><span style="color:#777;font-size:12px">粤电力Ａ 000539 当前 +10.02%<br>距涨停 +0.00%<br>题材: 电力</span></td><td style="padding:6px;color:#2980b9">立即考虑信号转弱 / 卖出</td></tr>
+<tr style="border-top:1px solid #eee"><td style="padding:6px;color:#666">10:51:33</td><td style="padding:6px;color:#e74c3c;font-weight:600">🔴 FIRE</td><td style="padding:6px"><strong>🚨 龙头炸板 粤电力Ａ</strong><br><span style="color:#777;font-size:12px">粤电力Ａ 000539 当前 +10.02%<br>距涨停 +0.00%<br>题材: 电力</span></td><td style="padding:6px;color:#2980b9">立即考虑信号转弱 / 卖出</td></tr>
+<tr style="border-top:1px solid #eee"><td style="padding:6px;color:#666">10:53:53</td><td style="padding:6px;color:#e74c3c;font-weight:600">🔴 FIRE</td><td style="padding:6px"><strong>🚨 龙头炸板 粤电力Ａ</strong><br><span style="color:#777;font-size:12px">粤电力Ａ 000539 当前 +10.02%<br>距涨停 +0.00%<br>题材: 电力</span></td><td style="padding:6px;color:#2980b9">立即考虑信号转弱 / 卖出</td></tr>
+<tr style="border-top:1px solid #eee"><td style="padding:6px;color:#666">11:14:53</td><td style="padding:6px;color:#e74c3c;font-weight:600">🔴 FIRE</td><td style="padding:6px"><strong>🚨 龙头炸板 粤电力Ａ</strong><br><span style="color:#777;font-size:12px">粤电力Ａ 000539 当前 +10.02%<br>距涨停 +0.00%<br>题材: 电力</span></td><td style="padding:6px;color:#2980b9">立即考虑信号转弱 / 卖出</td></tr>
+<tr style="border-top:1px solid #eee"><td style="padding:6px;color:#666">11:16:08</td><td style="padding:6px;color:#e74c3c;font-weight:600">🔴 FIRE</td><td style="padding:6px"><strong>🚨 龙头炸板 粤电力Ａ</strong><br><span style="color:#777;font-size:12px">粤电力Ａ 000539 当前 +9.91%<br>距涨停 -0.10%<br>题材: 电力</span></td><td style="padding:6px;color:#2980b9">立即考虑信号转弱 / 卖出</td></tr>
+<tr style="border-top:1px solid #eee"><td style="padding:6px;color:#666">11:17:28</td><td style="padding:6px;color:#e74c3c;font-weight:600">🔴 FIRE</td><td style="padding:6px"><strong>🚨 龙头炸板 粤电力Ａ</strong><br><span style="color:#777;font-size:12px">粤电力Ａ 000539 当前 +10.02%<br>距涨停 +0.00%<br>题材: 电力</span></td><td style="padding:6px;color:#2980b9">立即考虑信号转弱 / 卖出</td></tr>
+<tr style="border-top:1px solid #eee"><td style="padding:6px;color:#666">11:18:38</td><td style="padding:6px;color:#e74c3c;font-weight:600">🔴 FIRE</td><td style="padding:6px"><strong>🚨 龙头炸板 粤电力Ａ</strong><br><span style="color:#777;font-size:12px">粤电力Ａ 000539 当前 +10.02%<br>距涨停 +0.00%<br>题材: 电力</span></td><td style="padding:6px;color:#2980b9">立即考虑信号转弱 / 卖出</td></tr>
+<tr style="border-top:1px solid #eee"><td style="padding:6px;color:#666">11:20:18</td><td style="padding:6px;color:#e74c3c;font-weight:600">🔴 FIRE</td><td style="padding:6px"><strong>🚨 龙头炸板 粤电力Ａ</strong><br><span style="color:#777;font-size:12px">粤电力Ａ 000539 当前 +10.02%<br>距涨停 +0.00%<br>题材: 电力</span></td><td style="padding:6px;color:#2980b9">立即考虑信号转弱 / 卖出</td></tr>
+<tr style="border-top:1px solid #eee"><td style="padding:6px;color:#666">11:23:23</td><td style="padding:6px;color:#e74c3c;font-weight:600">🔴 FIRE</td><td style="padding:6px"><strong>🚨 龙头炸板 粤电力Ａ</strong><br><span style="color:#777;font-size:12px">粤电力Ａ 000539 当前 +10.02%<br>距涨停 +0.00%<br>题材: 电力</span></td><td style="padding:6px;color:#2980b9">立即考虑信号转弱 / 卖出</td></tr>
+<tr style="border-top:1px solid #eee"><td style="padding:6px;color:#666">11:24:28</td><td style="padding:6px;color:#e74c3c;font-weight:600">🔴 FIRE</td><td style="padding:6px"><strong>🚨 龙头炸板 粤电力Ａ</strong><br><span style="color:#777;font-size:12px">粤电力Ａ 000539 当前 +10.02%<br>距涨停 +0.00%<br>题材: 电力</span></td><td style="padding:6px;color:#2980b9">立即考虑信号转弱 / 卖出</td></tr>
+<tr style="border-top:1px solid #eee"><td style="padding:6px;color:#666">11:25:58</td><td style="padding:6px;color:#e74c3c;font-weight:600">🔴 FIRE</td><td style="padding:6px"><strong>🚨 龙头炸板 粤电力Ａ</strong><br><span style="color:#777;font-size:12px">粤电力Ａ 000539 当前 +10.02%<br>距涨停 +0.00%<br>题材: 电力</span></td><td style="padding:6px;color:#2980b9">立即考虑信号转弱 / 卖出</td></tr>
+<tr style="border-top:1px solid #eee"><td style="padding:6px;color:#666">11:28:28</td><td style="padding:6px;color:#e74c3c;font-weight:600">🔴 FIRE</td><td style="padding:6px"><strong>🚨 龙头炸板 粤电力Ａ</strong><br><span style="color:#777;font-size:12px">粤电力Ａ 000539 当前 +9.91%<br>距涨停 -0.10%<br>题材: 电力</span></td><td style="padding:6px;color:#2980b9">立即考虑信号转弱 / 卖出</td></tr>
+</tbody></table></details>
+</div><div class="strategy"><h3>📋 次日策略</h3><ul><li>⚡ <strong>发酵期</strong>：可正常打板，控制仓位，做新晋升二板</li><li>🎯 <strong>首选题材</strong>：AI算力（最高2板，15只涨停）</li><li>🆕 <strong>接力候选</strong>：春秋电子（603890）昨1板今2板，关注三板晋级</li><li>⚠ <strong>题材熄火</strong>：2 只老龙降级，避免反包博弈</li><li>⚠ <strong>炸板率偏高</strong>：当日封板质量差，次日开盘谨慎</li></ul></div>
+        <div class="footer">
+            数据来源：东财涨停池 + 同花顺热点 / 龙头战法策略 / 自动生成
+        </div>
+    </main>
+</div>
+</body>
+</html>
