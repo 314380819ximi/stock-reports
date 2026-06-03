@@ -1,0 +1,1659 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>🎯 龙头复盘 · 2026-06-03</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: "Microsoft YaHei", "PingFang SC", -apple-system, sans-serif;
+    background: #0a0e1a;
+    color: #d4d9e4;
+    line-height: 1.6;
+    font-size: 14px;
+}
+.layout { display: flex; min-height: 100vh; }
+
+/* === 侧边栏 === */
+.sidebar {
+    width: 240px;
+    background: #131826;
+    border-right: 1px solid #1f2638;
+    padding: 24px 16px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    flex-shrink: 0;
+}
+.sidebar h2 {
+    color: #4d8eff;
+    font-size: 13px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #1f2638;
+    letter-spacing: 1px;
+}
+.sidebar a {
+    display: block;
+    color: #b8bfd0;
+    text-decoration: none;
+    padding: 9px 12px;
+    border-radius: 6px;
+    margin: 3px 0;
+    font-size: 13px;
+    transition: all 0.15s;
+}
+.sidebar a:hover { background: #1a2238; color: #4d8eff; }
+.sidebar a.active {
+    background: linear-gradient(90deg, #1f3a8a33 0%, transparent 100%);
+    color: #4d8eff;
+    font-weight: 600;
+    border-left: 2px solid #4d8eff;
+}
+
+/* === 主内容 === */
+.main {
+    flex: 1;
+    padding: 32px 48px;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #1f2638;
+    margin-bottom: 24px;
+}
+.title {
+    font-size: 24px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #ff9d4d, #ff6b6b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.subtitle {
+    color: #6b7390;
+    font-size: 12px;
+}
+
+/* === 情绪温度卡 === */
+.sentiment {
+    background: linear-gradient(135deg, #131826 0%, #1a2238 100%);
+    border: 1px solid #1f2638;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 28px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 24px;
+}
+.sentiment-score {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.sentiment-num {
+    font-size: 56px;
+    font-weight: 800;
+    line-height: 1;
+}
+.sentiment-stage {
+    font-size: 14px;
+    margin-top: 8px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    display: inline-block;
+    align-self: center;
+}
+.sentiment-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    align-items: center;
+}
+.metric {
+    background: #0a0e1a;
+    border-radius: 8px;
+    padding: 12px 14px;
+    border-left: 3px solid #4d8eff;
+}
+.metric-label {
+    font-size: 11px;
+    color: #6b7390;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+}
+.metric-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: #e7ebf5;
+}
+.metric-extra { font-size: 11px; color: #8b94ad; margin-top: 2px; }
+
+/* === 题材卡片 === */
+.theme-card {
+    background: #131826;
+    border: 1px solid #1f2638;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.theme-header {
+    padding: 18px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #1f2638;
+}
+.theme-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #e7ebf5;
+}
+.theme-stage {
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+/* 评分分级颜色 */
+.score-15 { background: linear-gradient(90deg, #ef4444, #f97316); color: white; }
+.score-11 { background: linear-gradient(90deg, #f97316, #facc15); color: #1a1a1a; }
+.score-7  { background: linear-gradient(90deg, #facc15, #84cc16); color: #1a1a1a; }
+.score-3  { background: linear-gradient(90deg, #6b7280, #9ca3af); color: white; }
+.score-0  { background: #4b5563; color: #d1d5db; }
+
+.theme-body { padding: 20px 22px; }
+
+/* 信息行 */
+.theme-info-row {
+    display: flex;
+    gap: 24px;
+    font-size: 13px;
+    color: #b8bfd0;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+}
+.theme-info-row strong { color: #ff9d4d; }
+.catalyst {
+    background: #1a2238;
+    padding: 8px 14px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    border-left: 3px solid #4d8eff;
+}
+.catalyst-label { color: #6b7390; font-size: 11px; margin-right: 8px; }
+
+/* 评分进度条 */
+.score-bars {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
+    padding: 14px;
+    background: #0a0e1a;
+    border-radius: 8px;
+}
+.score-bar {
+    text-align: center;
+}
+.score-bar-label {
+    font-size: 10px;
+    color: #6b7390;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+}
+.score-bar-track {
+    background: #1f2638;
+    height: 6px;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 4px;
+}
+.score-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.4s;
+}
+.score-bar-fill-0 { background: #4b5563; width: 0%; }
+.score-bar-fill-1 { background: #f97316; width: 33%; }
+.score-bar-fill-2 { background: #facc15; width: 66%; }
+.score-bar-fill-3 { background: #22c55e; width: 100%; }
+.score-bar-value { font-size: 11px; color: #e7ebf5; font-weight: 600; }
+
+/* 市场观察盒子 */
+.advice-box {
+    background: #0a0e1a;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    border-left: 4px solid #4d8eff;
+}
+.advice-position {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+.pos-主升     { background: #dc2626; color: white; }
+.pos-发酵     { background: #f59e0b; color: #1a1a1a; }
+.pos-分歧     { background: #6b7280; color: white; }
+.pos-退潮     { background: #475569; color: #d1d5db; }
+.pos-熄火     { background: #1f2937; color: #6b7390; }
+
+.advice-list { font-size: 13px; line-height: 1.8; }
+.advice-list li { list-style: none; padding-left: 0; }
+.buy { color: #22c55e; }
+.avoid { color: #6b7390; }
+.risk { color: #f59e0b; }
+
+/* 梯队表格 */
+.ladder-section { margin-top: 16px; }
+.ladder-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #ff9d4d;
+    margin: 16px 0 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px dashed #1f2638;
+}
+.ladder-title small { color: #6b7390; font-weight: normal; font-size: 11px; margin-left: 8px; }
+.stock-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+.stock-table th {
+    text-align: left;
+    color: #6b7390;
+    font-size: 11px;
+    font-weight: normal;
+    padding: 6px 8px;
+    border-bottom: 1px solid #1f2638;
+    letter-spacing: 0.5px;
+}
+.stock-table td {
+    padding: 8px;
+    border-bottom: 1px solid #1a2238;
+    color: #b8bfd0;
+}
+.stock-table tr:last-child td { border-bottom: none; }
+.stock-table tr:hover { background: #1a2238; }
+.stock-code {
+    font-family: "Cascadia Code", "Consolas", monospace;
+    color: #4d8eff;
+    font-size: 11px;
+}
+.stock-name { color: #e7ebf5; font-weight: 600; }
+.boards-tag {
+    display: inline-block;
+    background: #dc2626;
+    color: white;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-right: 4px;
+}
+.warn-tag { color: #f59e0b; font-size: 11px; }
+.reason-tag { color: #6b7390; font-style: italic; font-size: 11px; }
+
+/* 龙头切换 */
+.dragon-switch {
+    background: #131826;
+    border: 1px solid #1f2638;
+    border-radius: 12px;
+    padding: 20px 22px;
+    margin-bottom: 24px;
+}
+.dragon-switch h3 { color: #ff9d4d; margin-bottom: 12px; font-size: 16px; }
+.fallen { color: #6b7280; }
+.new-candidate { color: #22c55e; }
+
+/* 策略提示 */
+.strategy {
+    background: linear-gradient(135deg, #1a2238 0%, #131826 100%);
+    border: 1px solid #2c3654;
+    border-radius: 12px;
+    padding: 20px 22px;
+    margin-bottom: 24px;
+}
+.strategy h3 { color: #4d8eff; margin-bottom: 12px; font-size: 16px; }
+.strategy ul { padding-left: 22px; line-height: 2; }
+
+/* 通用 */
+hr { border: none; border-top: 1px solid #1f2638; margin: 24px 0; }
+.footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1f2638;
+    color: #4a5168;
+    font-size: 11px;
+    text-align: center;
+}
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #131826; }
+::-webkit-scrollbar-thumb { background: #2c3654; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #4d8eff; }
+
+/* 情绪温度数字颜色 */
+.heat-cold { color: #4d8eff; }
+.heat-cool { color: #84cc16; }
+.heat-warm { color: #facc15; }
+.heat-hot  { color: #f97316; }
+.heat-fire { color: #ef4444; }
+</style>
+
+<style>
+.stock-profile {
+    margin: 12px 0 16px 24px;
+    border: 1px solid #d4e7ff;
+    border-radius: 8px;
+    background: #fafbff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+.stock-profile summary {
+    padding: 10px 14px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #2c5282;
+    font-size: 14px;
+    user-select: none;
+    list-style: none;
+}
+.stock-profile summary::-webkit-details-marker { display: none; }
+.stock-profile summary::before {
+    content: "▶ ";
+    font-size: 11px;
+    margin-right: 4px;
+    transition: transform 0.2s;
+    display: inline-block;
+}
+.stock-profile[open] summary::before {
+    transform: rotate(90deg);
+}
+.stock-profile summary:hover {
+    background: #eef4ff;
+}
+.profile-body {
+    padding: 8px 16px 14px;
+    font-size: 13px;
+    color: #2d3748;
+    line-height: 1.7;
+}
+.profile-body p { margin: 6px 0; }
+.profile-body .label {
+    color: #718096;
+    font-weight: 500;
+    min-width: 60px;
+    display: inline-block;
+}
+.profile-body .biz {
+    background: #fff;
+    padding: 6px 10px;
+    border-left: 3px solid #3182ce;
+    border-radius: 4px;
+    margin: 6px 0;
+}
+.profile-body .catalyst {
+    background: #fff7e6;
+    padding: 8px 12px;
+    border-left: 3px solid #f6ad55;
+    border-radius: 4px;
+    margin: 8px 0;
+    font-weight: 500;
+}
+.profile-body .pattern-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 8px 0;
+}
+.profile-body .pattern-tag {
+    background: #e6fffa;
+    color: #234e52;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    border: 1px solid #b2f5ea;
+}
+.profile-body .pattern-tag.warn {
+    background: #fff5f5;
+    color: #742a2a;
+    border-color: #fc8181;
+}
+.profile-body .metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 8px;
+    margin: 10px 0;
+}
+.profile-body .metric {
+    background: #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+    text-align: center;
+}
+.profile-body .metric .v {
+    font-weight: 600;
+    color: #2c5282;
+    display: block;
+    font-size: 14px;
+}
+.profile-body .metric .k {
+    color: #718096;
+    font-size: 11px;
+}
+.profile-body .risk-box {
+    background: #fff5f5;
+    padding: 8px 12px;
+    border-left: 3px solid #e53e3e;
+    border-radius: 4px;
+    margin: 8px 0;
+    font-size: 12px;
+    color: #742a2a;
+}
+.profile-body .concept-tags {
+    margin: 6px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+.profile-body .concept-tag {
+    background: #ebf8ff;
+    color: #2c5282;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+}
+.profile-body .reports-list {
+    margin: 6px 0;
+    font-size: 11px;
+    color: #4a5568;
+}
+.profile-body .reports-list li {
+    padding: 2px 0;
+}
+/* === 🆕 产业链推理盒子 (LLM 生成) === */
+.profile-body .chain-box {
+    background: linear-gradient(135deg, #fff5e6 0%, #fff 100%);
+    padding: 12px 14px;
+    border-left: 4px solid #ed8936;
+    border-radius: 6px;
+    margin: 10px 0;
+    box-shadow: 0 1px 3px rgba(237, 137, 54, 0.15);
+}
+.profile-body .chain-flow {
+    font-weight: 600;
+    color: #7c2d12;
+    font-size: 14px;
+    margin-bottom: 6px;
+    line-height: 1.5;
+}
+.profile-body .chain-key {
+    color: #2c5282;
+    font-size: 13px;
+    margin: 6px 0;
+    padding: 4px 0;
+    border-bottom: 1px dashed #e2e8f0;
+}
+.profile-body .chain-narrative {
+    color: #2d3748;
+    font-size: 12.5px;
+    line-height: 1.7;
+    margin: 8px 0;
+    text-align: justify;
+}
+.profile-body .chain-meta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+    font-size: 11.5px;
+}
+.profile-body .chain-meta .moat {
+    background: #e6fffa;
+    color: #234e52;
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+.profile-body .chain-meta .img-level {
+    background: #ebf4ff;
+    color: #2c5282;
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+</style></head>
+<body>
+<div style="background:#3a1a1a;border-left:5px solid #ff5555;padding:12px 20px;margin:0 0 20px 0;color:#ffaaaa;font-size:14px;">
+⚠️ <strong>风险提示</strong>: 本报告仅作学习交流，不构成投资建议。股市有风险，决策风险自担。
+</div>
+
+<div class="layout">
+
+    <nav class="sidebar">
+      <h2>📅 历史报告</h2>
+      <a href="2026-06-03.html" class="active">📊 2026-06-03</a>
+<a href="2026-06-02.html" class="">📊 2026-06-02</a>
+<a href="2026-06-01.html" class="">📊 2026-06-01</a>
+<a href="2026-05-29.html" class="">📊 2026-05-29</a>
+<a href="2026-05-27.html" class="">📊 2026-05-27</a>
+    </nav>
+    <main class="main">
+      <div class="header">
+        <div class="title">🎯 A股龙头复盘 · 2026-06-03</div>
+        <div class="subtitle">生成 19:46:02</div>
+      </div>
+    
+      
+    <div class="sentiment">
+      <div class="sentiment-score">
+        <div class="sentiment-num heat-warm">54°</div>
+        <div class="sentiment-stage score-7">✓ 正常</div>
+      </div>
+      <div class="sentiment-metrics">
+        <div class="metric">
+          <div class="metric-label">涨停 / 跌停</div>
+          <div class="metric-value">66 / 0</div>
+          <div class="metric-extra">剔除ST/新股 66</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">连板高度</div>
+          <div class="metric-value">3 板</div>
+          <div class="metric-extra">3板×5 · 2板×6 · 1板×55 <span style="color:#22c55e">✓ 完整</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">⭐ 晋级率</div>
+          <div class="metric-value">16.4%</div>
+          <div class="metric-extra">昨67→今11</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">炸板率</div>
+          <div class="metric-value">50.0%</div>
+          <div class="metric-extra">33 只触板未封</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="theme-card">
+      <div class="theme-header">
+        <div class="theme-name">▼ 机器人</div>
+        <div class="theme-stage score-11">11/18 · ⚡ 健康发酵</div>
+      </div>
+      <div class="theme-body">
+        <div class="theme-info-row">
+          <span><strong>9</strong> 只涨停</span>
+          <span>最高 <strong>3</strong> 板</span>
+          <span>总封单 <strong>3.88亿</strong></span>
+          <span style="color:#f59e0b;font-size:12px;margin-left:14px">⚠ 短板：封单弱</span>
+        </div>
+        
+        <div class="catalyst" style="line-height:1.7">
+          <span class="catalyst-label">💡 催化叙事（DeepSeek 推理 · 同花顺真实数据）</span>
+          <div style="margin-bottom:6px"><span style="color:#999;font-size:0.85em">关键词: </span>人形机器人 · 机器人</div>
+          <div style="margin:3px 0"><b style="color:#ff8a65">📰 引爆消息:</b> 特斯拉Optimus量产预期升温及国内人形机器人政策利好，资金聚焦零部件环节</div>
+          <div style="margin:3px 0"><b style="color:#ffb74d">🔥 持续性:</b> <span style="background:#ffb74d;color:#fff;padding:1px 7px;border-radius:3px;font-size:0.85em;font-weight:600">短期</span>  涨停家数9只但最高板仅3板，缺乏连板高度；无明确业绩兑现节点，情绪驱动为主</div>
+          <div style="margin:3px 0"><b style="color:#42a5f5">🎯 卖事实节点:</b> 12月特斯拉AI Day或国内机器人产业大会</div>
+        </div>
+        
+        <div class="score-bars">
+        <div class="score-bar">
+          <div class="score-bar-label">催化</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-3"></div></div>
+          <div class="score-bar-value">3/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">梯队</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-2"></div></div>
+          <div class="score-bar-value">2/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">封单</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-0"></div></div>
+          <div class="score-bar-value">0/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">资金</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">空间</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-2"></div></div>
+          <div class="score-bar-value">2/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">外溢</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-3"></div></div>
+          <div class="score-bar-value">3/3</div>
+        </div>
+        </div>
+        <div class="advice-box"><span class="advice-position pos-发酵">🎯 发酵</span><span style="color:#b8bfd0;margin-left:10px;font-size:13px">中军/龙头处于活跃区</span><ul class="advice-list"><li class="buy">▸ 龙头【郑州煤电】3板, 评级未达🥇</li><li class="buy">▸ 中军行列：模塑科技（2板）</li></ul></div>
+        
+    <div class="ladder-section">
+      <div class="ladder-title">🐲 龙头 <small>题材最高板</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="boards-tag">3板</span><span title="📊 临近突破 (距前期高点 ≤10%)" style="background:#ef6c00;color:#fff;padding:1px 5px;border-radius:3px;font-size:0.78em;margin-right:4px;font-weight:600">📊临近</span><span class="stock-name">郑州煤电</span> <span class="stock-code">600121</span></td>
+      <td>4570万</td>
+      <td>14:19:31</td>
+      <td>24.0%</td>
+      <td>69亿</td>
+      <td><span class="warn-tag">⚠1炸</span> </td>
+    </tr>
+    
+    <tr class="profile-row"><td colspan="6" style="padding:0;background:transparent">
+      <details class="stock-profile"><summary>🐉 郑州煤电 (600121) · ⚠️ 蹭概念 52分 · 30 秒读懂</summary><div class="profile-body"><p class="biz">📖 <b>主营</b>: 煤炭开采与销售，兼营煤炭相关物资和设备的采购与销售等贸易业务</p><div class="chain-box"><div class="chain-flow">💰 <b>资金选中逻辑</b>: 机器人题材炒作扩散至低价国资股→郑州煤电具有郑州国资背景且股价低→资金借机拉板，但无实质业务关联。</div><div class="chain-key">📍 <b>公司主营</b>: 煤炭开采与销售，兼营煤炭物资贸易。2024年煤炭业务营收占比无公开数据（公司年报未披露细分数据）。</div><div class="chain-relation" style="margin:8px 0;padding:6px 12px;background:rgba(255,255,255,0.04);border-left:3px solid #ff5252;border-radius:3px"><span style="font-weight:600;color:#ff5252">🎯 题材关联度: 蹭概念</span><span style="color:#aaa;margin-left:10px;font-size:0.9em">主营业务为煤炭，未披露机器人或算力相关业务。</span></div><div class="chain-narrative">【行业地位】公司是河南省国有煤炭企业，主营动力煤，行业地位一般，无显著稀缺性。【业绩兑现】2024年三季报营收同比-10%，净利润亏损，业绩承压。【题材关联度】公司同花顺归因涉及机器人、算力中心，但主营业务为煤炭，未披露任何机器人或算力相关业务，属蹭概念。</div><div class="chain-meta"><span style="background:#9e9e9e;color:#fff;padding:3px 8px;border-radius:4px">弱势股</span><span class="moat">🛡 无明显壁垒，主营煤炭开采，行业竞争激烈。</span><span class="img-level">🚀 想象空间 1/10 · 纯题材炒作，无业绩支撑，想象空间极低。</span></div></div><p><span class="label">🏭 行业:</span> 煤炭-煤炭开采-动力煤 · <span class="label">📅 上市:</span> 1998-01-07</p><div class="metrics"><div class="metric"><span class="v">-6.5x</span><span class="k">PE-TTM</span></div><div class="metric"><span class="v">9.42x</span><span class="k">PB</span></div><div class="metric"><span class="v">69亿</span><span class="k">流通市值</span></div><div class="metric"><span class="v">24.0%</span><span class="k">换手率</span></div></div><p><span class="label">📊 技术形态:</span></p><div class="pattern-tags"><span class="pattern-tag">⏳ 接近前高 (差 -2.7%)</span></div><div class="concept-tags">🏷️ <span class="concept-tag">机器人</span></div><div class="risk-box">⚠️ <b>风险点</b>: 无实质业务支撑，炒作后回调风险大；公司业绩亏损，估值无安全边际。 · 机构研报覆盖少, 缺乏基本面支撑</div></div></details>
+    </td></tr>
+    </tbody>
+      </table>
+    </div>
+    
+    <div class="ladder-section">
+      <div class="ladder-title">🛡 中军 <small>次高连板·机构候选</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="boards-tag">2板</span><span title="🔥 黄金介入期 (已破前期高点, 首破≤5日且累计<30%)" style="background:#43a047;color:#fff;padding:1px 5px;border-radius:3px;font-size:0.78em;margin-right:4px;font-weight:600">🔥黄金</span><span class="stock-name">模塑科技</span> <span class="stock-code">000700</span></td>
+      <td>1459万</td>
+      <td>10:18:54</td>
+      <td>16.1%</td>
+      <td>152亿</td>
+      <td><span class="warn-tag">⚠10炸</span> </td>
+    </tr>
+    
+    <tr class="profile-row"><td colspan="6" style="padding:0;background:transparent">
+      <details class="stock-profile"><summary>🐉 模塑科技 (000700) · ⚠️ 蹭概念 50分 · 30 秒读懂</summary><div class="profile-body"><p class="biz">📖 <b>主营</b>: 汽车保险杠等汽车外饰系统及轻量化零部件的研发、生产和销售</p><div class="chain-box"><div class="chain-flow">💰 <b>资金选中逻辑</b>: 机器人概念炒作扩散至汽车零部件→公司作为保险杠龙头具备低价+低估值优势→资金选择其作为补涨标的</div><div class="chain-key">📍 <b>公司主营</b>: 汽车保险杠等外饰系统及轻量化零部件研发、生产和销售。2024年保险杠业务营收占比无公开数据（年报未拆分）。</div><div class="chain-relation" style="margin:8px 0;padding:6px 12px;background:rgba(255,255,255,0.04);border-left:3px solid #ffb74d;border-radius:3px"><span style="font-weight:600;color:#ffb74d">🎯 题材关联度: 弱关联</span><span style="color:#aaa;margin-left:10px;font-size:0.9em">公司未披露机器人业务，仅因汽车零部件属性被归类</span></div><div class="chain-narrative">【行业地位】公司是国内保险杠龙头，市占率约20%（行业估算），但主业与机器人无直接关联。【业绩兑现】2025年一季报归母净利润同比增长，但具体增幅未披露，业绩增长主要来自汽车主业。【题材关联度】公司未披露机器人相关业务或合作，仅因汽车零部件属性被市场归入机器人概念，属弱关联。</div><div class="chain-meta"><span style="background:#9e9e9e;color:#fff;padding:3px 8px;border-radius:4px">弱势股</span><span class="moat">🛡 国内保险杠龙头，客户覆盖主流车企</span><span class="img-level">🚀 想象空间 3/10 · 主业与机器人无直接关联，想象空间有限</span></div></div><p><span class="label">🏭 行业:</span> 汽车-汽车零部件-车身附件及饰件 · <span class="label">📅 上市:</span> 1997-02-28</p><div class="metrics"><div class="metric"><span class="v">30.6x</span><span class="k">PE-TTM</span></div><div class="metric"><span class="v">3.84x</span><span class="k">PB</span></div><div class="metric"><span class="v">152亿</span><span class="k">流通市值</span></div><div class="metric"><span class="v">16.1%</span><span class="k">换手率</span></div></div><p><span class="label">📊 技术形态:</span></p><div class="pattern-tags"><span class="pattern-tag">✅ 突破前高 (+1.3% · 量比 1.8×)</span><span class="pattern-tag">✅ 创 60 日新高</span></div><div class="concept-tags">🏷️ <span class="concept-tag">机器人</span></div><div class="risk-box">⚠️ <b>风险点</b>: 主业与机器人无实质关联，概念炒作后回调风险大；主力资金净流出 · 机构研报覆盖少, 缺乏基本面支撑</div></div></details>
+    </td></tr>
+    </tbody>
+      </table>
+    </div>
+    
+    <div class="ladder-section">
+      <div class="ladder-title">👥 跟风 <small>早盘<10:00封·封单≥1500万</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="stock-name">祥鑫科技</span> <span class="stock-code">002965</span></td>
+      <td>1.39亿</td>
+      <td>09:43:21</td>
+      <td>4.1%</td>
+      <td>68亿</td>
+      <td> </td>
+    </tr>
+    
+    <tr>
+      <td><span class="stock-name">移远通信</span> <span class="stock-code">603236</span></td>
+      <td>5909万</td>
+      <td>09:37:51</td>
+      <td>5.7%</td>
+      <td>212亿</td>
+      <td><span class="warn-tag">⚠3炸</span> </td>
+    </tr>
+    
+    <tr>
+      <td><span title="📊 临近突破 (距前期高点 ≤10%)" style="background:#ef6c00;color:#fff;padding:1px 5px;border-radius:3px;font-size:0.78em;margin-right:4px;font-weight:600">📊临近</span><span class="stock-name">联域股份</span> <span class="stock-code">001326</span></td>
+      <td>3511万</td>
+      <td>09:32:15</td>
+      <td>8.4%</td>
+      <td>16亿</td>
+      <td><span class="warn-tag">⚠2炸</span> </td>
+    </tr>
+    
+    <tr class="profile-row"><td colspan="6" style="padding:0;background:transparent">
+      <details class="stock-profile"><summary>🐉 联域股份 (001326) · ⚠️ 蹭概念 41分 · 30 秒读懂</summary><div class="profile-body"><p class="biz">📖 <b>主营</b>: 专注于中、大功率LED照明产品的研发、生产与销售</p><div class="chain-box"><div class="chain-flow">💰 <b>资金选中逻辑</b>: 机器人概念炒作扩散至LED照明板块，但公司无机器人业务，资金仅因低价小盘股属性短期博弈。</div><div class="chain-key">📍 <b>公司主营</b>: 主营中、大功率LED照明产品，2024年营收占比无公开数据，北美业务占比较高（2024年报）。</div><div class="chain-relation" style="margin:8px 0;padding:6px 12px;background:rgba(255,255,255,0.04);border-left:3px solid #ff5252;border-radius:3px"><span style="font-weight:600;color:#ff5252">🎯 题材关联度: 蹭概念</span><span style="color:#aaa;margin-left:10px;font-size:0.9em">公司主营业务为LED照明，未披露机器人相关业务</span></div><div class="chain-narrative">【行业地位】公司专注于LED照明，北美市场收入占比高，但行业竞争激烈，无明显技术壁垒。【业绩兑现】2024年报营收同比+15%，但净利润增速放缓，无机器人相关业务收入。【题材关联度】公司主营业务为LED照明，与机器人概念无直接关联，仅因LED照明可用于机器人视觉辅助等场景，属弱关联。</div><div class="chain-meta"><span style="background:#9e9e9e;color:#fff;padding:3px 8px;border-radius:4px">弱势股</span><span class="moat">🛡 无明显壁垒</span><span class="img-level">🚀 想象空间 2/10 · 题材纯属蹭概念，无业绩支撑，想象空间极低</span></div></div><p><span class="label">🏭 行业:</span> 家用电器-照明设备Ⅱ-照明设备Ⅲ · <span class="label">📅 上市:</span> 2023-11-09</p><div class="metrics"><div class="metric"><span class="v">173.8x</span><span class="k">PE-TTM</span></div><div class="metric"><span class="v">4.03x</span><span class="k">PB</span></div><div class="metric"><span class="v">50亿</span><span class="k">流通市值</span></div><div class="metric"><span class="v">8.3%</span><span class="k">换手率</span></div></div><div class="concept-tags">🏷️ <span class="concept-tag">机器人</span></div><div class="risk-box">⚠️ <b>风险点</b>: 无机器人业务支撑，纯概念炒作，换手率极低，流动性风险高 · 机构研报覆盖少, 缺乏基本面支撑</div></div></details>
+    </td></tr>
+    
+    <tr>
+      <td><span class="stock-name">中重科技</span> <span class="stock-code">603135</span></td>
+      <td>3089万</td>
+      <td>09:41:33</td>
+      <td>1.5%</td>
+      <td>73亿</td>
+      <td> </td>
+    </tr>
+    </tbody>
+      </table>
+    </div>
+    
+    <div class="ladder-section">
+      <div class="ladder-title">👁 首板观察 <small>封晚/封弱·待次日二板验证</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="stock-name">德昌股份</span> <span class="stock-code">605555</span></td>
+      <td>3674万</td>
+      <td>10:00:28</td>
+      <td>2.5%</td>
+      <td>79亿</td>
+      <td> <span class="reason-tag">·10:00:28才封</span></td>
+    </tr>
+    
+    <tr>
+      <td><span class="stock-name">长华集团</span> <span class="stock-code">605018</span></td>
+      <td>1899万</td>
+      <td>13:00:32</td>
+      <td>4.8%</td>
+      <td>74亿</td>
+      <td><span class="warn-tag">⚠2炸</span> <span class="reason-tag">·13:00:32才封</span></td>
+    </tr>
+    
+    <tr>
+      <td><span title="🔥 黄金介入期 (已破前期高点, 首破≤5日且累计<30%)" style="background:#43a047;color:#fff;padding:1px 5px;border-radius:3px;font-size:0.78em;margin-right:4px;font-weight:600">🔥黄金</span><span class="stock-name">新安股份</span> <span class="stock-code">600596</span></td>
+      <td>738万</td>
+      <td>13:23:05</td>
+      <td>8.8%</td>
+      <td>194亿</td>
+      <td><span class="warn-tag">⚠9炸</span> <span class="reason-tag">·13:23:05才封·封单仅738万</span></td>
+    </tr>
+    
+    <tr class="profile-row"><td colspan="6" style="padding:0;background:transparent">
+      <details class="stock-profile"><summary>🐉 新安股份 (600596) · ⚠️ 蹭概念 38分 · 30 秒读懂</summary><div class="profile-body"><p class="biz">📖 <b>主营</b>: 草甘膦、毒死蜱等高效低毒类农药产品开发、生产与销售；有机硅单体及其下游产品的研制和生产经营;精细及生</p><div class="chain-box"><div class="chain-flow">💰 <b>资金选中逻辑</b>: 机器人概念炒作扩散至上游材料→有机硅可用于机器人密封件→公司为有机硅龙头→资金低位挖掘补涨。</div><div class="chain-key">📍 <b>公司主营</b>: 主营草甘膦、有机硅等农药及化工产品。2024年有机硅营收占比约30%，机器人相关业务无公开数据。</div><div class="chain-relation" style="margin:8px 0;padding:6px 12px;background:rgba(255,255,255,0.04);border-left:3px solid #ffb74d;border-radius:3px"><span style="font-weight:600;color:#ffb74d">🎯 题材关联度: 弱关联</span><span style="color:#aaa;margin-left:10px;font-size:0.9em">有机硅可用于机器人密封件，但公司未披露相关收入。</span></div><div class="chain-narrative">【行业地位】公司是国内有机硅行业龙头之一，拥有完整产业链，但有机硅主要用于建筑、电子等领域，与机器人直接关联度低。【业绩兑现】2025年一季报净利润同比增长，但主要受益于农药及有机硅周期回暖，非机器人业务驱动。【题材关联度】市场将公司归类为“光纤上游+人形机器人”，但公司未披露机器人相关产品，有机硅可用于机器人密封件等，但收入占比极低，属弱关联。</div><div class="chain-meta"><span style="background:#9e9e9e;color:#fff;padding:3px 8px;border-radius:4px">弱势股</span><span class="moat">🛡 有机硅全产业链优势，但无明显机器人壁垒。</span><span class="img-level">🚀 想象空间 3/10 · 机器人业务无实质布局，仅材料端弱关联，想象空间有限。</span></div></div><p><span class="label">🏭 行业:</span> 基础化工-农化制品-农药 · <span class="label">📅 上市:</span> 2001-09-06</p><div class="metrics"><div class="metric"><span class="v">92.5x</span><span class="k">PE-TTM</span></div><div class="metric"><span class="v">1.55x</span><span class="k">PB</span></div><div class="metric"><span class="v">194亿</span><span class="k">流通市值</span></div><div class="metric"><span class="v">8.8%</span><span class="k">换手率</span></div></div><p><span class="label">📊 技术形态:</span></p><div class="pattern-tags"><span class="pattern-tag">✅ 突破前高 (+4.7% · 量比 2.3×)</span><span class="pattern-tag">✅ 创 60 日新高</span></div><div class="concept-tags">🏷️ <span class="concept-tag">机器人</span></div><div class="risk-box">⚠️ <b>风险点</b>: 机器人概念炒作持续性存疑，公司基本面未受益，高位风险风险大。 · 机构研报覆盖少, 缺乏基本面支撑</div></div></details>
+    </td></tr>
+    </tbody>
+      </table>
+    </div>
+    
+      </div>
+    </div>
+    
+    <div class="theme-card">
+      <div class="theme-header">
+        <div class="theme-name">▼ 半导体封装</div>
+        <div class="theme-stage score-11">11/18 · ⚡ 健康发酵</div>
+      </div>
+      <div class="theme-body">
+        <div class="theme-info-row">
+          <span><strong>6</strong> 只涨停</span>
+          <span>最高 <strong>3</strong> 板</span>
+          <span>总封单 <strong>3.50亿</strong></span>
+          <span style="color:#f59e0b;font-size:12px;margin-left:14px">⚠ 短板：封单弱</span>
+        </div>
+        
+        <div class="catalyst" style="line-height:1.7">
+          <span class="catalyst-label">💡 催化叙事（DeepSeek 推理 · 同花顺真实数据）</span>
+          <div style="margin-bottom:6px"><span style="color:#999;font-size:0.85em">关键词: </span>先进封装 · 存储芯片</div>
+          <div style="margin:3px 0"><b style="color:#ff8a65">📰 引爆消息:</b> 先进封装和存储芯片需求增长，叠加国产替代预期，带动半导体封装板块异动。</div>
+          <div style="margin:3px 0"><b style="color:#ffb74d">🔥 持续性:</b> <span style="background:#ffb74d;color:#fff;padding:1px 7px;border-radius:3px;font-size:0.85em;font-weight:600">短期</span>  涨停家数少且最高板仅3板，缺乏持续资金流入；无明确政策或事件支撑。</div>
+          <div style="margin:3px 0"><b style="color:#42a5f5">🎯 卖事实节点:</b> 无明确可识别事件，需关注后续板块轮动。</div>
+        </div>
+        
+        <div class="score-bars">
+        <div class="score-bar">
+          <div class="score-bar-label">催化</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-3"></div></div>
+          <div class="score-bar-value">3/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">梯队</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-2"></div></div>
+          <div class="score-bar-value">2/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">封单</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">资金</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">空间</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-2"></div></div>
+          <div class="score-bar-value">2/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">外溢</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-2"></div></div>
+          <div class="score-bar-value">2/3</div>
+        </div>
+        </div>
+        <div class="advice-box"><span class="advice-position pos-发酵">🎯 发酵</span><span style="color:#b8bfd0;margin-left:10px;font-size:13px">中军/龙头处于活跃区</span><ul class="advice-list"><li class="buy">▸ 龙头【天洋新材】3板, 评级未达🥇</li><li class="buy">▸ 中军行列：实益达（2板）</li></ul></div>
+        
+    <div class="ladder-section">
+      <div class="ladder-title">🐲 龙头 <small>题材最高板</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="boards-tag">3板</span><span title="🔥 黄金介入期 (已破前期高点, 首破≤5日且累计<30%)" style="background:#43a047;color:#fff;padding:1px 5px;border-radius:3px;font-size:0.78em;margin-right:4px;font-weight:600">🔥黄金</span><span class="stock-name">天洋新材</span> <span class="stock-code">603330</span></td>
+      <td>9011万</td>
+      <td>09:25:02</td>
+      <td>2.9%</td>
+      <td>35亿</td>
+      <td> </td>
+    </tr>
+    
+    <tr class="profile-row"><td colspan="6" style="padding:0;background:transparent">
+      <details class="stock-profile"><summary>🐉 天洋新材 (603330) · ⚠️ 蹭概念 56分 · 30 秒读懂</summary><div class="profile-body"><p class="biz">📖 <b>主营</b>: 各类热塑性环保粘接材料的研发、生产及销售</p><div class="chain-box"><div class="chain-flow">💰 <b>资金选中逻辑</b>: 半导体封装概念炒作 → 电子胶作为封装材料之一 → 公司有电子胶产品 → 资金挖掘低位补涨标的</div><div class="chain-key">📍 <b>公司主营</b>: 主营热塑性环保粘接材料，电子胶业务营收占比无公开数据，2024年报未单独披露。</div><div class="chain-relation" style="margin:8px 0;padding:6px 12px;background:rgba(255,255,255,0.04);border-left:3px solid #ffb74d;border-radius:3px"><span style="font-weight:600;color:#ffb74d">🎯 题材关联度: 弱关联</span><span style="color:#aaa;margin-left:10px;font-size:0.9em">公司主营热塑性粘接材料，电子胶业务占比低，半导体封装用胶非核心业务</span></div><div class="chain-narrative">【行业地位】公司在电子胶领域有一定技术积累，但整体规模较小，行业地位不突出。【业绩兑现】2024年报营收同比变化无公开数据，电子胶业务收入未明确披露，业绩兑现情况不明。【题材关联度】公司产品可用于半导体封装及光模块透镜固定，属于电子胶细分应用，但主营业务仍以热塑性粘接材料为主，半导体相关收入占比极低，属弱关联。</div><div class="chain-meta"><span style="background:#9e9e9e;color:#fff;padding:3px 8px;border-radius:4px">弱势股</span><span class="moat">🛡 无明显壁垒，热塑性粘接材料行业竞争激烈</span><span class="img-level">🚀 想象空间 3/10 · 题材关联度弱，业绩未兑现，想象空间有限</span></div></div><p><span class="label">🏭 行业:</span> 基础化工-塑料-其他塑料制品 · <span class="label">📅 上市:</span> 2017-02-13</p><div class="metrics"><div class="metric"><span class="v">-15.5x</span><span class="k">PE-TTM</span></div><div class="metric"><span class="v">2.84x</span><span class="k">PB</span></div><div class="metric"><span class="v">37亿</span><span class="k">流通市值</span></div><div class="metric"><span class="v">2.7%</span><span class="k">换手率</span></div></div><p><span class="label">📊 技术形态:</span></p><div class="pattern-tags"><span class="pattern-tag">✅ 一字板突破前高 (+10.0%)</span><span class="pattern-tag">✅ 创 60 日新高</span></div><div class="concept-tags">🏷️ <span class="concept-tag">半导体封装</span></div><div class="risk-box">⚠️ <b>风险点</b>: 题材炒作持续性存疑，公司基本面未改善，估值偏高 · 机构研报覆盖少, 缺乏基本面支撑</div></div></details>
+    </td></tr>
+    </tbody>
+      </table>
+    </div>
+    
+    <div class="ladder-section">
+      <div class="ladder-title">🛡 中军 <small>次高连板·机构候选</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="boards-tag">2板</span><span title="🔥 黄金介入期 (已破前期高点, 首破≤5日且累计<30%)" style="background:#43a047;color:#fff;padding:1px 5px;border-radius:3px;font-size:0.78em;margin-right:4px;font-weight:600">🔥黄金</span><span class="stock-name">实益达</span> <span class="stock-code">002137</span></td>
+      <td>1.66亿</td>
+      <td>09:30:09</td>
+      <td>7.6%</td>
+      <td>41亿</td>
+      <td> </td>
+    </tr>
+    
+    <tr class="profile-row"><td colspan="6" style="padding:0;background:transparent">
+      <details class="stock-profile"><summary>🐉 实益达 (002137) · 🥈 中军 69分 · 30 秒读懂</summary><div class="profile-body"><p class="biz">📖 <b>主营</b>: 智能硬件制造业务、智能终端产品业务及智慧营销业务</p><div class="chain-box"><div class="chain-flow">💰 <b>资金选中逻辑</b>: 半导体封装概念炒作→公司有智能硬件制造业务，被市场联想为先进封装相关→资金选择低价小盘股进行补涨。</div><div class="chain-key">📍 <b>公司主营</b>: 主营智能硬件制造、智能终端及智慧营销，半导体封装业务营收占比无公开数据（2024年报）。</div><div class="chain-relation" style="margin:8px 0;padding:6px 12px;background:rgba(255,255,255,0.04);border-left:3px solid #ffb74d;border-radius:3px"><span style="font-weight:600;color:#ffb74d">🎯 题材关联度: 弱关联</span><span style="color:#aaa;margin-left:10px;font-size:0.9em">半导体封装业务营收占比无公开数据，主营为智能硬件制造</span></div><div class="chain-narrative">【行业地位】公司主营智能硬件制造，半导体封装业务未明确披露，行业地位不突出。【业绩兑现】2024年报营收及利润数据未公开，业绩兑现情况不明。【题材关联度】公司通过间接投资宇树科技涉足机器人概念，但半导体封装业务占比极低，属弱关联。</div><div class="chain-meta"><span style="background:#9e9e9e;color:#fff;padding:3px 8px;border-radius:4px">弱势股</span><span class="moat">🛡 无明显壁垒</span><span class="img-level">🚀 想象空间 3/10 · 题材关联度弱，业绩未兑现，想象空间有限</span></div></div><p><span class="label">🏭 行业:</span> 电子-光学光电子-LED · <span class="label">📅 上市:</span> 2007-06-13</p><div class="metrics"><div class="metric"><span class="v">139.0x</span><span class="k">PE-TTM</span></div><div class="metric"><span class="v">3.98x</span><span class="k">PB</span></div><div class="metric"><span class="v">60亿</span><span class="k">流通市值</span></div><div class="metric"><span class="v">7.6%</span><span class="k">换手率</span></div></div><p><span class="label">📊 技术形态:</span></p><div class="pattern-tags"><span class="pattern-tag warn">⚠️ 突破前高但 缺放量 (+10.1%)</span><span class="pattern-tag">✅ 创 60 日新高</span></div><div class="concept-tags">🏷️ <span class="concept-tag">半导体封装</span></div><div class="risk-box">⚠️ <b>风险点</b>: 题材炒作持续性存疑，公司基本面未支撑，估值偏高 · 机构研报覆盖少, 缺乏基本面支撑 · 形似突破但量能或形态不支持</div></div></details>
+    </td></tr>
+    </tbody>
+      </table>
+    </div>
+    
+    <div class="ladder-section">
+      <div class="ladder-title">👥 跟风 <small>早盘<10:00封·封单≥1500万</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span title="📊 临近突破 (距前期高点 ≤10%)" style="background:#ef6c00;color:#fff;padding:1px 5px;border-radius:3px;font-size:0.78em;margin-right:4px;font-weight:600">📊临近</span><span class="stock-name">华源控股</span> <span class="stock-code">002787</span></td>
+      <td>5645万</td>
+      <td>09:34:27</td>
+      <td>4.9%</td>
+      <td>69亿</td>
+      <td><span class="warn-tag">⚠2炸</span> </td>
+    </tr>
+    
+    <tr class="profile-row"><td colspan="6" style="padding:0;background:transparent">
+      <details class="stock-profile"><summary>🐉 华源控股 (002787) · ⚠️ 蹭概念 47分 · 30 秒读懂</summary><div class="profile-body"><p class="biz">📖 <b>主营</b>: 包装产品的研发、生产及销售</p><div class="chain-box"><div class="chain-flow">💰 <b>资金选中逻辑</b>: 半导体封装概念炒作→资金挖掘低位小市值标的→华源控股因参股宇树科技及半导体设备布局被归入题材，但缺乏实质业务支撑。</div><div class="chain-key">📍 <b>公司主营</b>: 主营金属包装产品研发生产销售，2024年包装业务营收占比约95%（2024年报），半导体设备业务尚处布局初期，营收占比无公开数据。</div><div class="chain-relation" style="margin:8px 0;padding:6px 12px;background:rgba(255,255,255,0.04);border-left:3px solid #ffb74d;border-radius:3px"><span style="font-weight:600;color:#ffb74d">🎯 题材关联度: 弱关联</span><span style="color:#aaa;margin-left:10px;font-size:0.9em">公司主营包装业务，半导体设备收入占比极低，参股宇树科技属财务投资。</span></div><div class="chain-narrative">【行业地位】公司传统包装业务为金属包装龙头，但半导体设备为新切入领域，尚无规模化收入。【业绩兑现】2024年报营收约25亿元，同比+5%，但半导体设备业务尚未贡献利润。【题材关联度】公司通过参股宇树科技（机器人）及布局半导体温控设备，与半导体封装概念存在间接关联，但主营业务不直接受益，属弱关联。</div><div class="chain-meta"><span style="background:#9e9e9e;color:#fff;padding:3px 8px;border-radius:4px">弱势股</span><span class="moat">🛡 无明显壁垒，传统包装业务竞争激烈，半导体设备尚未形成竞争力。</span><span class="img-level">🚀 想象空间 3/10 · 半导体设备业务处于早期，业绩兑现周期长，想象空间有限。</span></div></div><p><span class="label">🏭 行业:</span> 轻工制造-包装印刷-金属包装 · <span class="label">📅 上市:</span> 2015-12-31</p><div class="metrics"><div class="metric"><span class="v">79.2x</span><span class="k">PE-TTM</span></div><div class="metric"><span class="v">5.01x</span><span class="k">PB</span></div><div class="metric"><span class="v">93亿</span><span class="k">流通市值</span></div><div class="metric"><span class="v">4.9%</span><span class="k">换手率</span></div></div><p><span class="label">📰 研报:</span> 近 90 日 1 篇 (1篇关注)</p><ul class="reports-list"><li>2026-05-13 | 开源证券 | 公司首次覆盖报告：从包装龙头到半导体设备新锐，双轮驱动成长可期</li></ul><div class="concept-tags">🏷️ <span class="concept-tag">半导体封装</span></div><div class="risk-box">⚠️ <b>风险点</b>: 题材炒作缺乏业绩支撑，估值偏高，需警惕回调风险。 · 机构研报覆盖少, 缺乏基本面支撑</div></div></details>
+    </td></tr>
+    
+    <tr>
+      <td><span class="stock-name">三孚股份</span> <span class="stock-code">603938</span></td>
+      <td>1520万</td>
+      <td>09:39:01</td>
+      <td>7.6%</td>
+      <td>181亿</td>
+      <td><span class="warn-tag">⚠2炸</span> </td>
+    </tr>
+    </tbody>
+      </table>
+    </div>
+    
+    <div class="ladder-section">
+      <div class="ladder-title">👁 首板观察 <small>封晚/封弱·待次日二板验证</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="stock-name">园林股份</span> <span class="stock-code">605303</span></td>
+      <td>1990万</td>
+      <td>13:19:18</td>
+      <td>6.0%</td>
+      <td>48亿</td>
+      <td> <span class="reason-tag">·13:19:18才封</span></td>
+    </tr>
+    
+    <tr>
+      <td><span title="📊 临近突破 (距前期高点 ≤10%)" style="background:#ef6c00;color:#fff;padding:1px 5px;border-radius:3px;font-size:0.78em;margin-right:4px;font-weight:600">📊临近</span><span class="stock-name">中旗新材</span> <span class="stock-code">001212</span></td>
+      <td>251万</td>
+      <td>13:06:06</td>
+      <td>9.0%</td>
+      <td>95亿</td>
+      <td><span class="warn-tag">⚠13炸</span> <span class="reason-tag">·13:06:06才封·封单仅251万</span></td>
+    </tr>
+    
+    <tr class="profile-row"><td colspan="6" style="padding:0;background:transparent">
+      <details class="stock-profile"><summary>🐉 中旗新材 (001212) · 🔭 观察 39分 · 30 秒读懂</summary><div class="profile-body"><p class="biz">📖 <b>主营</b>: 从事人造石英石装饰材料研发、生产、销售和服务</p><div class="chain-box"><div class="chain-flow">💰 <b>资金选中逻辑</b>: 半导体封装概念炒作扩散→高纯石英砂被误认为半导体材料→公司名称含“石英”且主营石英石→资金短期博弈</div><div class="chain-key">📍 <b>公司主营</b>: 主营人造石英石装饰材料，2024年营收占比无公开数据，与半导体封装无直接业务关联。</div><div class="chain-relation" style="margin:8px 0;padding:6px 12px;background:rgba(255,255,255,0.04);border-left:3px solid #ff5252;border-radius:3px"><span style="font-weight:600;color:#ff5252">🎯 题材关联度: 蹭概念</span><span style="color:#aaa;margin-left:10px;font-size:0.9em">公司主营装饰用人造石英石，非半导体级高纯石英砂，无相关业务披露</span></div><div class="chain-narrative">【行业地位】公司是国内人造石英石行业龙头之一，但主业为建材装饰材料，与半导体封装无关。【业绩兑现】2024年扭亏为盈，但主要源于主业改善，非半导体业务贡献。【题材关联度】市场可能炒作“高纯石英砂”概念，但公司产品为装饰用人造石英石，并非半导体级高纯石英砂，属弱关联或蹭概念。</div><div class="chain-meta"><span style="background:#9e9e9e;color:#fff;padding:3px 8px;border-radius:4px">弱势股</span><span class="moat">🛡 无明显壁垒，主业为传统建材</span><span class="img-level">🚀 想象空间 2/10 · 题材关联度低，无业绩兑现支撑，纯概念炒作</span></div></div><p><span class="label">🏭 行业:</span> 建筑材料-装修建材-其他建材 · <span class="label">📅 上市:</span> 2021-08-23</p><div class="metrics"><div class="metric"><span class="v">-461.8x</span><span class="k">PE-TTM</span></div><div class="metric"><span class="v">5.74x</span><span class="k">PB</span></div><div class="metric"><span class="v">110亿</span><span class="k">流通市值</span></div><div class="metric"><span class="v">9.0%</span><span class="k">换手率</span></div></div><div class="concept-tags">🏷️ <span class="concept-tag">半导体封装</span></div><div class="risk-box">⚠️ <b>风险点</b>: 题材炒作无实质支撑，换手率极低，封单为0，次日高开低走风险大 · 机构研报覆盖少, 缺乏基本面支撑</div></div></details>
+    </td></tr>
+    </tbody>
+      </table>
+    </div>
+    
+      </div>
+    </div>
+    
+    <div class="theme-card">
+      <div class="theme-header">
+        <div class="theme-name">▼ 电力</div>
+        <div class="theme-stage score-11">11/18 · ⚡ 健康发酵</div>
+      </div>
+      <div class="theme-body">
+        <div class="theme-info-row">
+          <span><strong>5</strong> 只涨停</span>
+          <span>最高 <strong>1</strong> 板</span>
+          <span>总封单 <strong>7.13亿</strong></span>
+          <span style="color:#f59e0b;font-size:12px;margin-left:14px">⚠ 短板：梯队断</span>
+        </div>
+        
+        <div class="catalyst" style="line-height:1.7">
+          <span class="catalyst-label">💡 催化叙事（DeepSeek 推理 · 同花顺真实数据）</span>
+          <div style="margin-bottom:6px"><span style="color:#999;font-size:0.85em">关键词: </span>热电联产</div>
+          <div style="margin:3px 0"><b style="color:#ff8a65">📰 引爆消息:</b> 热电联产概念受关注，新中港、豫能控股等涨停，市场对电力行业政策预期升温。</div>
+          <div style="margin:3px 0"><b style="color:#ffb74d">🔥 持续性:</b> <span style="background:#ffb74d;color:#fff;padding:1px 7px;border-radius:3px;font-size:0.85em;font-weight:600">短期</span>  涨停股均为首板，缺乏连板高度，且无近期历史数据支撑，持续性有限。</div>
+          <div style="margin:3px 0"><b style="color:#42a5f5">🎯 卖事实节点:</b> 无明确事件节点，需观察后续政策或消息催化。</div>
+        </div>
+        
+        <div class="score-bars">
+        <div class="score-bar">
+          <div class="score-bar-label">催化</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-3"></div></div>
+          <div class="score-bar-value">3/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">梯队</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-0"></div></div>
+          <div class="score-bar-value">0/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">封单</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-2"></div></div>
+          <div class="score-bar-value">2/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">资金</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">空间</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-3"></div></div>
+          <div class="score-bar-value">3/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">外溢</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-2"></div></div>
+          <div class="score-bar-value">2/3</div>
+        </div>
+        </div>
+        <div class="advice-box"><span class="advice-position pos-发酵">🎯 发酵</span><span style="color:#b8bfd0;margin-left:10px;font-size:13px">中军/龙头处于活跃区</span><ul class="advice-list"><li class="buy">▸ 次日竞价【新中港】二板表现（题材龙一候选）</li><li class="avoid">▸ 午后封板的票换手充分度偏低</li></ul></div>
+        
+    <div class="ladder-section">
+      <div class="ladder-title">⭐ 首板龙头候选 <small>上午<10:30封·封单≥5000万·无炸板</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="stock-name">新中港</span> <span class="stock-code">605162</span></td>
+      <td>9501万</td>
+      <td>09:46:38</td>
+      <td>5.6%</td>
+      <td>51亿</td>
+      <td> <span class="reason-tag">·09:46:38首封·封单9501万·一字不开</span></td>
+    </tr>
+    </tbody>
+      </table>
+    </div>
+    
+    <div class="ladder-section">
+      <div class="ladder-title">👁 首板观察 <small>封晚/封弱·待次日二板验证</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span title="🔥 黄金介入期 (已破前期高点, 首破≤5日且累计<30%)" style="background:#43a047;color:#fff;padding:1px 5px;border-radius:3px;font-size:0.78em;margin-right:4px;font-weight:600">🔥黄金</span><span class="stock-name">豫能控股</span> <span class="stock-code">001896</span></td>
+      <td>2.87亿</td>
+      <td>09:48:45</td>
+      <td>10.8%</td>
+      <td>306亿</td>
+      <td><span class="warn-tag">⚠1炸</span> <span class="reason-tag">·炸板1次</span></td>
+    </tr>
+    
+    <tr class="profile-row"><td colspan="6" style="padding:0;background:transparent">
+      <details class="stock-profile"><summary>🐉 豫能控股 (001896) · 🥈 中军 76分 · 30 秒读懂</summary><div class="profile-body"><p class="biz">📖 <b>主营</b>: 电力开发、生产和销售</p><div class="chain-box"><div class="chain-flow">💰 <b>资金选中逻辑</b>: 电力板块受夏季用电高峰预期催化 → 火电股普涨 → 豫能控股叠加参股算力概念 → 资金选择其作为小市值弹性标的</div><div class="chain-key">📍 <b>公司主营</b>: 主营电力开发、生产和销售，2024年火电业务营收占比无公开数据（年报未披露细分）。</div><div class="chain-relation" style="margin:8px 0;padding:6px 12px;background:rgba(255,255,255,0.04);border-left:3px solid #ffb74d;border-radius:3px"><span style="font-weight:600;color:#ffb74d">🎯 题材关联度: 弱关联</span><span style="color:#aaa;margin-left:10px;font-size:0.9em">参股算力业务未披露具体收入占比，主营仍为火电</span></div><div class="chain-narrative">【行业地位】公司是河南省属火电企业，装机规模在省内有一定地位，但火电行业整体竞争激烈，无明显稀缺性。【业绩兑现】2024年三季报营收同比变化无公开数据，火电业务受煤价波动影响较大，业绩稳定性差。【题材关联度】公司参股算力相关企业，但具体参股比例和业务贡献未披露，市场预期其受益于电力+算力融合概念，但实际关联度弱。</div><div class="chain-meta"><span style="background:#9e9e9e;color:#fff;padding:3px 8px;border-radius:4px">弱势股</span><span class="moat">🛡 无明显壁垒，河南省内火电企业之一</span><span class="img-level">🚀 想象空间 4/10 · 火电行业周期性较强，参股算力未兑现业绩，想象空间有限</span></div></div><p><span class="label">🏭 行业:</span> 公用事业-电力-火力发电 · <span class="label">📅 上市:</span> 1998-01-22</p><div class="metrics"><div class="metric"><span class="v">81.6x</span><span class="k">PE-TTM</span></div><div class="metric"><span class="v">8.60x</span><span class="k">PB</span></div><div class="metric"><span class="v">306亿</span><span class="k">流通市值</span></div><div class="metric"><span class="v">10.8%</span><span class="k">换手率</span></div></div><p><span class="label">📊 技术形态:</span></p><div class="pattern-tags"><span class="pattern-tag warn">⚠️ 突破前高但 缺放量 (+3.5%)</span><span class="pattern-tag">✅ 创 60 日新高</span><span class="pattern-tag">✅ 主力强势 (接口失败, 用封单 2.87亿 推算)</span></div><div class="concept-tags">🏷️ <span class="concept-tag">电力</span></div><div class="risk-box">⚠️ <b>风险点</b>: 火电盈利受煤价波动影响大，参股算力业务未明确，估值缺乏支撑 · 机构研报覆盖少, 缺乏基本面支撑 · 形似突破但量能或形态不支持</div></div></details>
+    </td></tr>
+    
+    <tr>
+      <td><span class="stock-name">京能电力</span> <span class="stock-code">600578</span></td>
+      <td>1.99亿</td>
+      <td>13:15:54</td>
+      <td>5.2%</td>
+      <td>625亿</td>
+      <td> <span class="reason-tag">·13:15:54才封</span></td>
+    </tr>
+    
+    <tr>
+      <td><span title="📊 临近突破 (距前期高点 ≤10%)" style="background:#ef6c00;color:#fff;padding:1px 5px;border-radius:3px;font-size:0.78em;margin-right:4px;font-weight:600">📊临近</span><span class="stock-name">西昌电力</span> <span class="stock-code">600505</span></td>
+      <td>7380万</td>
+      <td>13:56:05</td>
+      <td>9.7%</td>
+      <td>52亿</td>
+      <td> <span class="reason-tag">·13:56:05才封</span></td>
+    </tr>
+    
+    <tr class="profile-row"><td colspan="6" style="padding:0;background:transparent">
+      <details class="stock-profile"><summary>🐉 西昌电力 (600505) · 🥉 补涨 50分 · 30 秒读懂</summary><div class="profile-body"><p class="biz">📖 <b>主营</b>: 发电、供电、电力工程设计安装</p><div class="chain-box"><div class="chain-flow">💰 <b>资金选中逻辑</b>: 业绩增长题材炒作 → 绿色电力板块轮动 → 公司业绩预增（未披露具体数据） → 央企背景提供安全边际 → 资金选择低位补涨</div><div class="chain-key">📍 <b>公司主营</b>: 主营发电、供电及电力工程设计安装。2024年营收中电力业务占比约100%（年报数据），但业绩增长具体幅度无公开数据。</div><div class="chain-relation" style="margin:8px 0;padding:6px 12px;background:rgba(255,255,255,0.04);border-left:3px solid #ffb74d;border-radius:3px"><span style="font-weight:600;color:#ffb74d">🎯 题材关联度: 弱关联</span><span style="color:#aaa;margin-left:10px;font-size:0.9em">业绩增长题材，但公司未披露具体增长数据，仅靠绿色电力概念联动</span></div><div class="chain-narrative">【行业地位】公司为凉山州地方电力龙头，拥有发配售一体化优势，但规模较小，无显著行业地位。【业绩兑现】2024年业绩增长主要受益于来水改善及电价调整，但具体数据未披露，业绩持续性存疑。【题材关联度】绿色电力+央企背景，与当前业绩增长题材直接相关，但公司无额外催化，属弱关联。</div><div class="chain-meta"><span style="background:#9e9e9e;color:#fff;padding:3px 8px;border-radius:4px">弱势股</span><span class="moat">🛡 无明显壁垒，地方性电力企业，无稀缺资源或技术优势</span><span class="img-level">🚀 想象空间 3/10 · 业绩增长题材短期炒作，无长期想象空间，公司基本面平淡</span></div></div><p><span class="label">🏭 行业:</span> 公用事业-电力-电能综合服务 · <span class="label">📅 上市:</span> 2002-05-30</p><div class="metrics"><div class="metric"><span class="v">382.4x</span><span class="k">PE-TTM</span></div><div class="metric"><span class="v">4.27x</span><span class="k">PB</span></div><div class="metric"><span class="v">52亿</span><span class="k">流通市值</span></div><div class="metric"><span class="v">9.7%</span><span class="k">换手率</span></div></div><div class="concept-tags">🏷️ <span class="concept-tag">业绩增长</span></div><div class="risk-box">⚠️ <b>风险点</b>: 业绩增长持续性不确定，估值无支撑，换手率极低，流动性风险高 · 机构研报覆盖少, 缺乏基本面支撑</div></div></details>
+    </td></tr>
+    </tbody>
+      </table>
+    </div>
+    
+      </div>
+    </div>
+    
+    <div class="theme-card">
+      <div class="theme-header">
+        <div class="theme-name">▼ CPO</div>
+        <div class="theme-stage score-7">10/18 · ⚠ 分歧观察</div>
+      </div>
+      <div class="theme-body">
+        <div class="theme-info-row">
+          <span><strong>2</strong> 只涨停</span>
+          <span>最高 <strong>2</strong> 板</span>
+          <span>总封单 <strong>9.83亿</strong></span>
+          
+        </div>
+        
+        <div class="catalyst" style="line-height:1.7">
+          <span class="catalyst-label">💡 催化叙事（DeepSeek 推理 · 同花顺真实数据）</span>
+          <div style="margin-bottom:6px"><span style="color:#999;font-size:0.85em">关键词: </span>CPO · 一季报增长 · 多芯光纤</div>
+          <div style="margin:3px 0"><b style="color:#ff8a65">📰 引爆消息:</b> CPO技术突破叠加一季报增长预期，多芯光纤概念受关注，亨通光电、环旭电子涨停</div>
+          <div style="margin:3px 0"><b style="color:#ffb74d">🔥 持续性:</b> <span style="background:#ffb74d;color:#fff;padding:1px 7px;border-radius:3px;font-size:0.85em;font-weight:600">短期</span>  涨停数量少、最高板仅2板，缺乏持续催化；一季报增长为短期业绩驱动，多芯光纤尚未形成板块效应</div>
+          <div style="margin:3px 0"><b style="color:#42a5f5">🎯 卖事实节点:</b> 4月底一季报披露截止日，业绩兑现后可能回调</div>
+        </div>
+        
+        <div class="score-bars">
+        <div class="score-bar">
+          <div class="score-bar-label">催化</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-2"></div></div>
+          <div class="score-bar-value">2/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">梯队</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">封单</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-3"></div></div>
+          <div class="score-bar-value">3/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">资金</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">空间</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-3"></div></div>
+          <div class="score-bar-value">3/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">外溢</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-0"></div></div>
+          <div class="score-bar-value">0/3</div>
+        </div>
+        </div>
+        <div class="advice-box"><span class="advice-position pos-分歧">🎯 分歧</span><span style="color:#b8bfd0;margin-left:10px;font-size:13px">题材内部分化加大</span><ul class="advice-list"><li class="buy">▸ 次日竞价表现是关键观察点</li><li class="buy">▸ 首板候选：明日二板晋级是关键观察点</li><li class="risk">⚠ ⚠️ 二板【亨通光电】出现利空澄清, 题材逻辑面临扰动</li><li class="risk">⚠ ⚠️ 本题材发现 1 只利空澄清：亨通光电</li></ul></div>
+        
+    <div class="ladder-section">
+      <div class="ladder-title">🐲 龙头 <small>题材最高板</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="boards-tag">2板</span><span title="🔥 黄金介入期 (已破前期高点, 首破≤5日且累计<30%)" style="background:#43a047;color:#fff;padding:1px 5px;border-radius:3px;font-size:0.78em;margin-right:4px;font-weight:600">🔥黄金</span><span class="stock-name">亨通光电</span> <span class="stock-code">600487</span></td>
+      <td>8.56亿</td>
+      <td>09:32:08</td>
+      <td>2.9%</td>
+      <td>2236亿</td>
+      <td><span class="warn-tag">⚠1炸</span> </td>
+    </tr>
+    
+    <tr class="profile-row"><td colspan="6" style="padding:0;background:transparent">
+      <details class="stock-profile"><summary>🐉 亨通光电 (600487) · 🥈 中军 67分 · 30 秒读懂</summary><div class="profile-body"><p class="biz">📖 <b>主营</b>: 光纤光缆的生产与销售</p><div class="chain-box"><div class="chain-flow">💰 <b>资金选中逻辑</b>: AI算力需求推动光通信升级→多芯光纤提升传输容量→公司具备特种光纤产能优势→资金选择龙头标的。</div><div class="chain-key">📍 <b>公司主营</b>: 光纤光缆生产销售，2024年光纤光缆营收占比约60%（2024年报）。</div><div class="chain-relation" style="margin:8px 0;padding:6px 12px;background:rgba(255,255,255,0.04);border-left:3px solid #66bb6a;border-radius:3px"><span style="font-weight:600;color:#66bb6a">🎯 题材关联度: 强关联</span><span style="color:#aaa;margin-left:10px;font-size:0.9em">公司主营光纤光缆，多芯光纤为特种光纤方向。</span></div><div class="chain-narrative">【行业地位】国内光纤光缆龙头之一，具备特种光纤（多芯光纤）产能优势，东兴证券研报提及（2026-03-26）。【业绩兑现】2025年一季报增长，但具体增速未披露。【题材关联度】多芯光纤是下一代大容量光通信关键技术，公司已布局相关产品，属强关联。</div><div class="chain-meta"><span style="background:#43a047;color:#fff;padding:3px 8px;border-radius:4px">双轨股</span><span class="moat">🛡 国内光纤光缆龙头，特种光纤产能优势。</span><span class="img-level">🚀 想象空间 7/10 · 多芯光纤处于产业化初期，2-3年中期空间。</span></div></div><p><span class="label">🏭 行业:</span> 通信-通信设备-通信线缆及配套 · <span class="label">📅 上市:</span> 2003-08-22</p><div class="metrics"><div class="metric"><span class="v">69.8x</span><span class="k">PE-TTM</span></div><div class="metric"><span class="v">6.96x</span><span class="k">PB</span></div><div class="metric"><span class="v">2255亿</span><span class="k">流通市值</span></div><div class="metric"><span class="v">2.9%</span><span class="k">换手率</span></div></div><p><span class="label">📊 技术形态:</span></p><div class="pattern-tags"><span class="pattern-tag warn">⚠️ 突破前高但 缺放量 (+10.0%)</span><span class="pattern-tag">✅ 创 60 日新高</span><span class="pattern-tag">✅ 主力强势 (接口失败, 用封单 8.56亿 推算)</span></div><p><span class="label">📰 研报:</span> 近 90 日 1 篇 (1篇增持)</p><ul class="reports-list"><li>2026-03-26 | 东兴证券 | 具备特种光纤产能优势，光通信板块迎来景气周期</li></ul><div class="concept-tags">🏷️ <span class="concept-tag">多芯光纤</span></div><div class="risk-box">⚠️ <b>风险点</b>: 多芯光纤尚未大规模商用，业绩兑现周期较长。 · 机构研报覆盖少, 缺乏基本面支撑 · 形似突破但量能或形态不支持</div><div class="clarification" style="margin-top:10px"><div style="font-weight:600;color:#ff5252;margin-bottom:4px">🚨 澄清/异动公告</div><div style="margin:6px 0;padding:8px 12px;background:rgba(255,82,82,0.08);border-left:3px solid #ff5252;border-radius:3px;font-size:0.9em"><div style="font-weight:600">🔴 强利空 <span style="color:#888;font-weight:400">[2026-06-03 18:34:19]</span></div><div style="margin:4px 0;color:#ccc">亨通光电：不涉及应披露而未披露的重大信息</div><div style="font-size:0.85em;color:#aaa">触发词：<code style="background:#222;padding:1px 4px;border-radius:2px;color:#ffb74d">不涉及</code></div><div style="margin-top:6px;padding:8px 12px;background:rgba(255,255,255,0.04);border-left:3px solid #9e9e9e;border-radius:3px;font-size:0.93em;color:#ddd"><span style="background:#9e9e9e;color:#fff;padding:1px 7px;border-radius:3px;font-size:0.85em;font-weight:600">中性</span> 💰 <b>反向解读</b>：公司仅否认未披露信息，未否认题材，资金可能视为无新增利空，维持原有预期<br>🔍 <b>明日观察</b>：次日竞价低开<3%则属正常；若高开>2%则资金反向解读为利好<br>📖 <b>历史案例</b>：无公开案例</div></div><div style="margin-top:4px;font-size:0.8em;color:#666;font-style:italic">注：基于DeepSeek 反向解读 + 关键词触发双重参考，仅供参考；明日开盘竞价可能与预测不一致</div></div></div></details>
+    </td></tr>
+    </tbody>
+      </table>
+    </div>
+    
+    <div class="ladder-section">
+      <div class="ladder-title">👥 跟风 <small>早盘<10:00封·封单≥1500万</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="stock-name">环旭电子</span> <span class="stock-code">601231</span></td>
+      <td>1.26亿</td>
+      <td>09:33:53</td>
+      <td>1.9%</td>
+      <td>1042亿</td>
+      <td><span class="warn-tag">⚠2炸</span> </td>
+    </tr>
+    </tbody>
+      </table>
+    </div>
+    
+      </div>
+    </div>
+    
+    <div class="theme-card">
+      <div class="theme-header">
+        <div class="theme-name">▼ 多芯光纤</div>
+        <div class="theme-stage score-7">9/18 · ⚠ 分歧观察</div>
+      </div>
+      <div class="theme-body">
+        <div class="theme-info-row">
+          <span><strong>1</strong> 只涨停</span>
+          <span>最高 <strong>2</strong> 板</span>
+          <span>总封单 <strong>8.56亿</strong></span>
+          <span style="color:#f59e0b;font-size:12px;margin-left:14px">⚠ 短板：催化老</span>
+        </div>
+        
+        <div class="catalyst" style="line-height:1.7">
+          <span class="catalyst-label">💡 催化叙事（DeepSeek 推理 · 同花顺真实数据）</span>
+          <div style="margin-bottom:6px"><span style="color:#999;font-size:0.85em">关键词: </span>一季报增长 · 多芯光纤 · CPO</div>
+          <div style="margin:3px 0"><b style="color:#ff8a65">📰 引爆消息:</b> 亨通光电一季报增长叠加多芯光纤、CPO概念，市场关注其多芯光纤技术进展</div>
+          <div style="margin:3px 0"><b style="color:#ffb74d">🔥 持续性:</b> <span style="background:#ffb74d;color:#fff;padding:1px 7px;border-radius:3px;font-size:0.85em;font-weight:600">短期</span>  仅1只涨停且最高2板，缺乏板块效应；无近30天历史数据，催化强度弱</div>
+          <div style="margin:3px 0"><b style="color:#42a5f5">🎯 卖事实节点:</b> 一季报披露窗口结束（4月底）</div>
+        </div>
+        
+        <div class="score-bars">
+        <div class="score-bar">
+          <div class="score-bar-label">催化</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">梯队</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">封单</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-3"></div></div>
+          <div class="score-bar-value">3/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">资金</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">空间</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-3"></div></div>
+          <div class="score-bar-value">3/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">外溢</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-0"></div></div>
+          <div class="score-bar-value">0/3</div>
+        </div>
+        </div>
+        <div class="advice-box"><span class="advice-position pos-分歧">🎯 分歧</span><span style="color:#b8bfd0;margin-left:10px;font-size:13px">题材内部分化加大</span><ul class="advice-list"><li class="buy">▸ 次日竞价表现是关键观察点</li><li class="buy">▸ 首板候选：明日二板晋级是关键观察点</li><li class="risk">⚠ ⚠️ 二板【亨通光电】出现利空澄清, 题材逻辑面临扰动</li><li class="risk">⚠ ⚠️ 本题材发现 1 只利空澄清：亨通光电</li></ul></div>
+        
+    <div class="ladder-section">
+      <div class="ladder-title">🐲 龙头 <small>题材最高板</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="boards-tag">2板</span><span title="🔥 黄金介入期 (已破前期高点, 首破≤5日且累计<30%)" style="background:#43a047;color:#fff;padding:1px 5px;border-radius:3px;font-size:0.78em;margin-right:4px;font-weight:600">🔥黄金</span><span class="stock-name">亨通光电</span> <span class="stock-code">600487</span></td>
+      <td>8.56亿</td>
+      <td>09:32:08</td>
+      <td>2.9%</td>
+      <td>2236亿</td>
+      <td><span class="warn-tag">⚠1炸</span> </td>
+    </tr>
+    
+    <tr class="profile-row"><td colspan="6" style="padding:0;background:transparent">
+      <details class="stock-profile"><summary>🐉 亨通光电 (600487) · 🥈 中军 67分 · 30 秒读懂</summary><div class="profile-body"><p class="biz">📖 <b>主营</b>: 光纤光缆的生产与销售</p><div class="chain-box"><div class="chain-flow">💰 <b>资金选中逻辑</b>: AI算力需求推动光通信升级→多芯光纤提升传输容量→公司具备特种光纤产能优势→资金选择龙头标的。</div><div class="chain-key">📍 <b>公司主营</b>: 光纤光缆生产销售，2024年光纤光缆营收占比约60%（2024年报）。</div><div class="chain-relation" style="margin:8px 0;padding:6px 12px;background:rgba(255,255,255,0.04);border-left:3px solid #66bb6a;border-radius:3px"><span style="font-weight:600;color:#66bb6a">🎯 题材关联度: 强关联</span><span style="color:#aaa;margin-left:10px;font-size:0.9em">公司主营光纤光缆，多芯光纤为特种光纤方向。</span></div><div class="chain-narrative">【行业地位】国内光纤光缆龙头之一，具备特种光纤（多芯光纤）产能优势，东兴证券研报提及（2026-03-26）。【业绩兑现】2025年一季报增长，但具体增速未披露。【题材关联度】多芯光纤是下一代大容量光通信关键技术，公司已布局相关产品，属强关联。</div><div class="chain-meta"><span style="background:#43a047;color:#fff;padding:3px 8px;border-radius:4px">双轨股</span><span class="moat">🛡 国内光纤光缆龙头，特种光纤产能优势。</span><span class="img-level">🚀 想象空间 7/10 · 多芯光纤处于产业化初期，2-3年中期空间。</span></div></div><p><span class="label">🏭 行业:</span> 通信-通信设备-通信线缆及配套 · <span class="label">📅 上市:</span> 2003-08-22</p><div class="metrics"><div class="metric"><span class="v">69.8x</span><span class="k">PE-TTM</span></div><div class="metric"><span class="v">6.96x</span><span class="k">PB</span></div><div class="metric"><span class="v">2255亿</span><span class="k">流通市值</span></div><div class="metric"><span class="v">2.9%</span><span class="k">换手率</span></div></div><p><span class="label">📊 技术形态:</span></p><div class="pattern-tags"><span class="pattern-tag warn">⚠️ 突破前高但 缺放量 (+10.0%)</span><span class="pattern-tag">✅ 创 60 日新高</span><span class="pattern-tag">✅ 主力强势 (接口失败, 用封单 8.56亿 推算)</span></div><p><span class="label">📰 研报:</span> 近 90 日 1 篇 (1篇增持)</p><ul class="reports-list"><li>2026-03-26 | 东兴证券 | 具备特种光纤产能优势，光通信板块迎来景气周期</li></ul><div class="concept-tags">🏷️ <span class="concept-tag">多芯光纤</span></div><div class="risk-box">⚠️ <b>风险点</b>: 多芯光纤尚未大规模商用，业绩兑现周期较长。 · 机构研报覆盖少, 缺乏基本面支撑 · 形似突破但量能或形态不支持</div><div class="clarification" style="margin-top:10px"><div style="font-weight:600;color:#ff5252;margin-bottom:4px">🚨 澄清/异动公告</div><div style="margin:6px 0;padding:8px 12px;background:rgba(255,82,82,0.08);border-left:3px solid #ff5252;border-radius:3px;font-size:0.9em"><div style="font-weight:600">🔴 强利空 <span style="color:#888;font-weight:400">[2026-06-03 18:34:19]</span></div><div style="margin:4px 0;color:#ccc">亨通光电：不涉及应披露而未披露的重大信息</div><div style="font-size:0.85em;color:#aaa">触发词：<code style="background:#222;padding:1px 4px;border-radius:2px;color:#ffb74d">不涉及</code></div><div style="margin-top:6px;padding:8px 12px;background:rgba(255,255,255,0.04);border-left:3px solid #9e9e9e;border-radius:3px;font-size:0.93em;color:#ddd"><span style="background:#9e9e9e;color:#fff;padding:1px 7px;border-radius:3px;font-size:0.85em;font-weight:600">中性</span> 💰 <b>反向解读</b>：公司仅否认未披露信息，未否认题材，资金可能视为无新增利空，维持原有预期<br>🔍 <b>明日观察</b>：次日竞价低开<3%则属正常；若高开>2%则资金反向解读为利好<br>📖 <b>历史案例</b>：无公开案例</div></div><div style="margin-top:4px;font-size:0.8em;color:#666;font-style:italic">注：基于DeepSeek 反向解读 + 关键词触发双重参考，仅供参考；明日开盘竞价可能与预测不一致</div></div></div></details>
+    </td></tr>
+    </tbody>
+      </table>
+    </div>
+    
+      </div>
+    </div>
+    
+    <div class="theme-card">
+      <div class="theme-header">
+        <div class="theme-name">▼ 光通信铜缆</div>
+        <div class="theme-stage score-7">9/18 · ⚠ 分歧观察</div>
+      </div>
+      <div class="theme-body">
+        <div class="theme-info-row">
+          <span><strong>4</strong> 只涨停</span>
+          <span>最高 <strong>1</strong> 板</span>
+          <span>总封单 <strong>4.11亿</strong></span>
+          <span style="color:#f59e0b;font-size:12px;margin-left:14px">⚠ 短板：梯队断</span>
+        </div>
+        
+        <div class="catalyst" style="line-height:1.7">
+          <span class="catalyst-label">💡 催化叙事（DeepSeek 推理 · 同花顺真实数据）</span>
+          <div style="margin-bottom:6px"><span style="color:#999;font-size:0.85em">关键词: </span>PCB · 光模块</div>
+          <div style="margin:3px 0"><b style="color:#ff8a65">📰 引爆消息:</b> PCB/光模块概念活跃，带动光通信铜缆相关个股涨停，市场关注高速互联需求</div>
+          <div style="margin:3px 0"><b style="color:#ffb74d">🔥 持续性:</b> <span style="background:#ffb74d;color:#fff;padding:1px 7px;border-radius:3px;font-size:0.85em;font-weight:600">短期</span>  涨停数量少、最高板仅1板，缺乏持续催化；需观察后续是否有行业事件支撑</div>
+          <div style="margin:3px 0"><b style="color:#42a5f5">🎯 卖事实节点:</b> 无明确事件节点，关注板块能否出现连板股</div>
+        </div>
+        
+        <div class="score-bars">
+        <div class="score-bar">
+          <div class="score-bar-label">催化</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-2"></div></div>
+          <div class="score-bar-value">2/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">梯队</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-0"></div></div>
+          <div class="score-bar-value">0/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">封单</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-2"></div></div>
+          <div class="score-bar-value">2/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">资金</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">空间</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-3"></div></div>
+          <div class="score-bar-value">3/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">外溢</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        </div>
+        <div class="advice-box"><span class="advice-position pos-分歧">🎯 分歧</span><span style="color:#b8bfd0;margin-left:10px;font-size:13px">题材内部分化加大</span><ul class="advice-list"><li class="buy">▸ 次日竞价【欧克科技】二板表现（题材龙一候选）</li><li class="buy">▸ 备选：迅捷兴 同步观察</li><li class="avoid">▸ 午后封板的票换手充分度偏低</li></ul></div>
+        
+    <div class="ladder-section">
+      <div class="ladder-title">⭐ 首板龙头候选 <small>上午<10:30封·封单≥5000万·无炸板</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="stock-name">欧克科技</span> <span class="stock-code">001223</span></td>
+      <td>1.20亿</td>
+      <td>09:38:54</td>
+      <td>4.6%</td>
+      <td>32亿</td>
+      <td> <span class="reason-tag">·09:38:54首封·封单1.20亿·一字不开</span></td>
+    </tr>
+    
+    <tr>
+      <td><span class="stock-name">迅捷兴</span> <span class="stock-code">688655</span></td>
+      <td>5333万</td>
+      <td>10:22:39</td>
+      <td>10.8%</td>
+      <td>78亿</td>
+      <td> <span class="reason-tag">·10:22:39首封·封单5333万·一字不开</span></td>
+    </tr>
+    
+    <tr class="profile-row"><td colspan="6" style="padding:0;background:transparent">
+      <details class="stock-profile"><summary>🐉 迅捷兴 (688655) · 🥈 中军 65分 · 30 秒读懂</summary><div class="profile-body"><p class="biz">📖 <b>主营</b>: 印制电路板的研发、生产和销售</p><div class="chain-box"><div class="chain-flow">💰 <b>资金选中逻辑</b>: 光通信铜缆概念炒作扩散至PCB板块，公司因定增AI服务器PCB项目被资金挖掘，叠加小盘低价属性，成为补涨标的。</div><div class="chain-key">📍 <b>公司主营</b>: 主营印制电路板（PCB）研发、生产和销售，2024年PCB业务营收占比无公开数据（公司年报未披露细分占比）。</div><div class="chain-relation" style="margin:8px 0;padding:6px 12px;background:rgba(255,255,255,0.04);border-left:3px solid #ffb74d;border-radius:3px"><span style="font-weight:600;color:#ffb74d">🎯 题材关联度: 弱关联</span><span style="color:#aaa;margin-left:10px;font-size:0.9em">主营PCB，与铜缆直接关联低，但定增涉及AI服务器PCB，属间接受益。</span></div><div class="chain-narrative">【行业地位】迅捷兴为中小型PCB厂商，产品覆盖HDI、多层板等，但非行业龙头，市占率无公开数据。【业绩兑现】近90天无研报覆盖，2024年业绩未披露，业绩兑现情况不明。【题材关联度】光通信铜缆概念主要涉及DAC（高速铜缆）连接器及线缆，而公司主营PCB，与铜缆直接关联度低。但PCB是光模块及服务器的基础元器件，800G光模块及AI服务器对高端PCB有需求，公司定增项目涉及AI服务器PCB，形成弱关联。</div><div class="chain-meta"><span style="background:#9e9e9e;color:#fff;padding:3px 8px;border-radius:4px">弱势股</span><span class="moat">🛡 无明显壁垒，PCB行业竞争激烈，公司规模较小。</span><span class="img-level">🚀 想象空间 4/10 · 题材关联度弱，业绩未兑现，想象空间有限。</span></div></div><p><span class="label">🏭 行业:</span> 电子-元件-印制电路板 · <span class="label">📅 上市:</span> 2021-05-11</p><div class="metrics"><div class="metric"><span class="v">-342.1x</span><span class="k">PE-TTM</span></div><div class="metric"><span class="v">11.99x</span><span class="k">PB</span></div><div class="metric"><span class="v">78亿</span><span class="k">流通市值</span></div><div class="metric"><span class="v">10.8%</span><span class="k">换手率</span></div></div><div class="concept-tags">🏷️ <span class="concept-tag">光通信铜缆</span></div><div class="risk-box">⚠️ <b>风险点</b>: 题材炒作持续性存疑，公司基本面未改善，估值偏高。 · 机构研报覆盖少, 缺乏基本面支撑</div></div></details>
+    </td></tr>
+    </tbody>
+      </table>
+    </div>
+    
+    <div class="ladder-section">
+      <div class="ladder-title">👁 首板观察 <small>封晚/封弱·待次日二板验证</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span title="🔥 黄金介入期 (已破前期高点, 首破≤5日且累计<30%)" style="background:#43a047;color:#fff;padding:1px 5px;border-radius:3px;font-size:0.78em;margin-right:4px;font-weight:600">🔥黄金</span><span class="stock-name">一博科技</span> <span class="stock-code">301366</span></td>
+      <td>1.47亿</td>
+      <td>09:25:00</td>
+      <td>8.3%</td>
+      <td>63亿</td>
+      <td><span class="warn-tag">⚠1炸</span> <span class="reason-tag">·炸板1次</span></td>
+    </tr>
+    
+    <tr class="profile-row"><td colspan="6" style="padding:0;background:transparent">
+      <details class="stock-profile"><summary>🐉 一博科技 (301366) · 🥈 中军 68分 · 30 秒读懂</summary><div class="profile-body"><p class="biz">📖 <b>主营</b>: PCB设计服务、PCBA制造服务及其销售</p><div class="chain-box"><div class="chain-flow">💰 <b>资金选中逻辑</b>: 光通信铜缆概念炒作 → 资金寻找低位小市值PCB股 → 一博科技具备PCB设计能力且无澄清公告 → 资金借势拉板</div><div class="chain-key">📍 <b>公司主营</b>: PCB设计服务及PCBA制造服务。2024年PCB相关业务营收占比无公开数据，公司未单独披露（2024年报）。</div><div class="chain-relation" style="margin:8px 0;padding:6px 12px;background:rgba(255,255,255,0.04);border-left:3px solid #ffb74d;border-radius:3px"><span style="font-weight:600;color:#ffb74d">🎯 题材关联度: 弱关联</span><span style="color:#aaa;margin-left:10px;font-size:0.9em">PCB设计服务可应用于高速连接器，但铜缆非公司主营产品</span></div><div class="chain-narrative">【行业地位】公司是国内PCB设计服务细分领域龙头，具备高速高密度PCB设计能力，客户覆盖通信、半导体等领域（来源：公司官网）。【业绩兑现】2024年营收同比+15%，但净利润下滑，业绩兑现一般（2024年报）。【题材关联度】光通信铜缆概念主要涉及高速铜缆连接，公司PCB设计服务可应用于高速背板、连接器等领域，但铜缆本身非公司主营，属弱关联。</div><div class="chain-meta"><span style="background:#9e9e9e;color:#fff;padding:3px 8px;border-radius:4px">弱势股</span><span class="moat">🛡 国内PCB设计服务细分龙头，具备高速高密度设计能力</span><span class="img-level">🚀 想象空间 4/10 · 题材周期短，铜缆概念非公司主营，业绩未充分兑现</span></div></div><p><span class="label">🏭 行业:</span> 电子-元件-印制电路板 · <span class="label">📅 上市:</span> 2022-09-26</p><div class="metrics"><div class="metric"><span class="v">238.9x</span><span class="k">PE-TTM</span></div><div class="metric"><span class="v">5.24x</span><span class="k">PB</span></div><div class="metric"><span class="v">113亿</span><span class="k">流通市值</span></div><div class="metric"><span class="v">8.3%</span><span class="k">换手率</span></div></div><p><span class="label">📊 技术形态:</span></p><div class="pattern-tags"><span class="pattern-tag warn">⚠️ 突破前高但 缺放量 (+6.2%)</span><span class="pattern-tag">✅ 创 60 日新高</span></div><div class="concept-tags">🏷️ <span class="concept-tag">光通信铜缆</span></div><div class="risk-box">⚠️ <b>风险点</b>: 概念炒作成分大，无业绩支撑，换手率低，次日抛压风险高 · 机构研报覆盖少, 缺乏基本面支撑 · 形似突破但量能或形态不支持</div></div></details>
+    </td></tr>
+    
+    <tr>
+      <td><span class="stock-name">青山纸业</span> <span class="stock-code">600103</span></td>
+      <td>9096万</td>
+      <td>09:41:23</td>
+      <td>12.7%</td>
+      <td>90亿</td>
+      <td><span class="warn-tag">⚠1炸</span> <span class="reason-tag">·炸板1次</span></td>
+    </tr>
+    </tbody>
+      </table>
+    </div>
+    
+      </div>
+    </div>
+    
+    <div class="theme-card">
+      <div class="theme-header">
+        <div class="theme-name">▼ 业绩增长</div>
+        <div class="theme-stage score-7">9/18 · ⚠ 分歧观察</div>
+      </div>
+      <div class="theme-body">
+        <div class="theme-info-row">
+          <span><strong>4</strong> 只涨停</span>
+          <span>最高 <strong>1</strong> 板</span>
+          <span>总封单 <strong>2.69亿</strong></span>
+          <span style="color:#f59e0b;font-size:12px;margin-left:14px">⚠ 短板：梯队断</span>
+        </div>
+        
+        <div class="catalyst" style="line-height:1.7">
+          <span class="catalyst-label">💡 催化叙事（DeepSeek 推理 · 同花顺真实数据）</span>
+          <div style="margin-bottom:6px"><span style="color:#999;font-size:0.85em">关键词: </span>业绩增长</div>
+          <div style="margin:3px 0"><b style="color:#ff8a65">📰 引爆消息:</b> 多家公司发布业绩预增公告，蓝科高新、恒星科技等个股涨停，市场聚焦业绩增长主线。</div>
+          <div style="margin:3px 0"><b style="color:#ffb74d">🔥 持续性:</b> <span style="background:#ffb74d;color:#fff;padding:1px 7px;border-radius:3px;font-size:0.85em;font-weight:600">短期</span>  业绩增长为个股事件驱动，缺乏板块持续性催化；涨停家数少，最高板仅1板，资金关注度有限。</div>
+          <div style="margin:3px 0"><b style="color:#42a5f5">🎯 卖事实节点:</b> 年报/季报披露截止日（4月30日）前，个股业绩兑现后易见顶回落。</div>
+        </div>
+        
+        <div class="score-bars">
+        <div class="score-bar">
+          <div class="score-bar-label">催化</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-2"></div></div>
+          <div class="score-bar-value">2/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">梯队</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-0"></div></div>
+          <div class="score-bar-value">0/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">封单</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-2"></div></div>
+          <div class="score-bar-value">2/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">资金</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">空间</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-3"></div></div>
+          <div class="score-bar-value">3/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">外溢</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        </div>
+        <div class="advice-box"><span class="advice-position pos-分歧">🎯 分歧</span><span style="color:#b8bfd0;margin-left:10px;font-size:13px">题材内部分化加大</span><ul class="advice-list"><li class="buy">▸ 次日竞价【恒星科技】二板表现（题材龙一候选）</li><li class="avoid">▸ 午后封板的票换手充分度偏低</li></ul></div>
+        
+    <div class="ladder-section">
+      <div class="ladder-title">⭐ 首板龙头候选 <small>上午<10:30封·封单≥5000万·无炸板</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="stock-name">恒星科技</span> <span class="stock-code">002132</span></td>
+      <td>6740万</td>
+      <td>10:09:12</td>
+      <td>4.4%</td>
+      <td>75亿</td>
+      <td> <span class="reason-tag">·10:09:12首封·封单6740万·一字不开</span></td>
+    </tr>
+    </tbody>
+      </table>
+    </div>
+    
+    <div class="ladder-section">
+      <div class="ladder-title">👁 首板观察 <small>封晚/封弱·待次日二板验证</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="stock-name">华电辽能</span> <span class="stock-code">600396</span></td>
+      <td>1.06亿</td>
+      <td>14:21:43</td>
+      <td>20.8%</td>
+      <td>314亿</td>
+      <td> <span class="reason-tag">·14:21:43才封</span></td>
+    </tr>
+    
+    <tr>
+      <td><span title="📊 临近突破 (距前期高点 ≤10%)" style="background:#ef6c00;color:#fff;padding:1px 5px;border-radius:3px;font-size:0.78em;margin-right:4px;font-weight:600">📊临近</span><span class="stock-name">西昌电力</span> <span class="stock-code">600505</span></td>
+      <td>7380万</td>
+      <td>13:56:05</td>
+      <td>9.7%</td>
+      <td>52亿</td>
+      <td> <span class="reason-tag">·13:56:05才封</span></td>
+    </tr>
+    
+    <tr class="profile-row"><td colspan="6" style="padding:0;background:transparent">
+      <details class="stock-profile"><summary>🐉 西昌电力 (600505) · 🥉 补涨 50分 · 30 秒读懂</summary><div class="profile-body"><p class="biz">📖 <b>主营</b>: 发电、供电、电力工程设计安装</p><div class="chain-box"><div class="chain-flow">💰 <b>资金选中逻辑</b>: 业绩增长题材炒作 → 绿色电力板块轮动 → 公司业绩预增（未披露具体数据） → 央企背景提供安全边际 → 资金选择低位补涨</div><div class="chain-key">📍 <b>公司主营</b>: 主营发电、供电及电力工程设计安装。2024年营收中电力业务占比约100%（年报数据），但业绩增长具体幅度无公开数据。</div><div class="chain-relation" style="margin:8px 0;padding:6px 12px;background:rgba(255,255,255,0.04);border-left:3px solid #ffb74d;border-radius:3px"><span style="font-weight:600;color:#ffb74d">🎯 题材关联度: 弱关联</span><span style="color:#aaa;margin-left:10px;font-size:0.9em">业绩增长题材，但公司未披露具体增长数据，仅靠绿色电力概念联动</span></div><div class="chain-narrative">【行业地位】公司为凉山州地方电力龙头，拥有发配售一体化优势，但规模较小，无显著行业地位。【业绩兑现】2024年业绩增长主要受益于来水改善及电价调整，但具体数据未披露，业绩持续性存疑。【题材关联度】绿色电力+央企背景，与当前业绩增长题材直接相关，但公司无额外催化，属弱关联。</div><div class="chain-meta"><span style="background:#9e9e9e;color:#fff;padding:3px 8px;border-radius:4px">弱势股</span><span class="moat">🛡 无明显壁垒，地方性电力企业，无稀缺资源或技术优势</span><span class="img-level">🚀 想象空间 3/10 · 业绩增长题材短期炒作，无长期想象空间，公司基本面平淡</span></div></div><p><span class="label">🏭 行业:</span> 公用事业-电力-电能综合服务 · <span class="label">📅 上市:</span> 2002-05-30</p><div class="metrics"><div class="metric"><span class="v">382.4x</span><span class="k">PE-TTM</span></div><div class="metric"><span class="v">4.27x</span><span class="k">PB</span></div><div class="metric"><span class="v">52亿</span><span class="k">流通市值</span></div><div class="metric"><span class="v">9.7%</span><span class="k">换手率</span></div></div><div class="concept-tags">🏷️ <span class="concept-tag">业绩增长</span></div><div class="risk-box">⚠️ <b>风险点</b>: 业绩增长持续性不确定，估值无支撑，换手率极低，流动性风险高 · 机构研报覆盖少, 缺乏基本面支撑</div></div></details>
+    </td></tr>
+    
+    <tr>
+      <td><span class="stock-name">蓝科高新</span> <span class="stock-code">601798</span></td>
+      <td>2179万</td>
+      <td>09:30:47</td>
+      <td>1.7%</td>
+      <td>30亿</td>
+      <td> <span class="reason-tag">·封单2179万</span></td>
+    </tr>
+    </tbody>
+      </table>
+    </div>
+    
+      </div>
+    </div>
+    
+    <div class="theme-card">
+      <div class="theme-header">
+        <div class="theme-name">▼ 碳酸锶涨价</div>
+        <div class="theme-stage score-7">8/18 · ⚠ 分歧观察</div>
+      </div>
+      <div class="theme-body">
+        <div class="theme-info-row">
+          <span><strong>1</strong> 只涨停</span>
+          <span>最高 <strong>3</strong> 板</span>
+          <span>总封单 <strong>1.90亿</strong></span>
+          <span style="color:#f59e0b;font-size:12px;margin-left:14px">⚠ 短板：催化老</span>
+        </div>
+        
+        <div class="catalyst" style="line-height:1.7">
+          <span class="catalyst-label">💡 催化叙事（DeepSeek 推理 · 同花顺真实数据）</span>
+          <div style="margin-bottom:6px"><span style="color:#999;font-size:0.85em">关键词: </span>玻璃基板上游 · MLCC上游 · 碳酸锶涨价</div>
+          <div style="margin:3px 0"><b style="color:#ff8a65">📰 引爆消息:</b> 碳酸锶价格持续上涨，受玻璃基板、MLCC等下游需求拉动，红星发展3连板领涨</div>
+          <div style="margin:3px 0"><b style="color:#ffb74d">🔥 持续性:</b> <span style="background:#ffb74d;color:#fff;padding:1px 7px;border-radius:3px;font-size:0.85em;font-weight:600">短期</span>  涨价题材通常受供需短期错配驱动，但缺乏长期政策或技术突破支撑，需警惕价格回调风险</div>
+          <div style="margin:3px 0"><b style="color:#42a5f5">🎯 卖事实节点:</b> 碳酸锶现货价格出现回落或下游采购放缓信号</div>
+        </div>
+        
+        <div class="score-bars">
+        <div class="score-bar">
+          <div class="score-bar-label">催化</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">梯队</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-2"></div></div>
+          <div class="score-bar-value">2/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">封单</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-2"></div></div>
+          <div class="score-bar-value">2/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">资金</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-1"></div></div>
+          <div class="score-bar-value">1/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">空间</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-2"></div></div>
+          <div class="score-bar-value">2/3</div>
+        </div>
+        
+        <div class="score-bar">
+          <div class="score-bar-label">外溢</div>
+          <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-0"></div></div>
+          <div class="score-bar-value">0/3</div>
+        </div>
+        </div>
+        <div class="advice-box"><span class="advice-position pos-分歧">🎯 分歧</span><span style="color:#b8bfd0;margin-left:10px;font-size:13px">题材内部分化加大</span><ul class="advice-list"><li class="buy">▸ 龙头【红星发展】3板, 评级未达🥇</li></ul></div>
+        
+    <div class="ladder-section">
+      <div class="ladder-title">🐲 龙头 <small>题材最高板</small></div>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>股票</th><th>封单</th><th>首封</th><th>换手</th><th>流通</th><th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><span class="boards-tag">3板</span><span title="⚠️ 持有观察期 (首破 6-14 日, 累计 30-50%)" style="background:#9e9e9e;color:#fff;padding:1px 5px;border-radius:3px;font-size:0.78em;margin-right:4px;font-weight:600">⚠️持有</span><span class="stock-name">红星发展</span> <span class="stock-code">600367</span></td>
+      <td>1.90亿</td>
+      <td>09:31:18</td>
+      <td>4.0%</td>
+      <td>138亿</td>
+      <td> </td>
+    </tr>
+    
+    <tr class="profile-row"><td colspan="6" style="padding:0;background:transparent">
+      <details class="stock-profile"><summary>🐉 红星发展 (600367) · 🥈 中军 78分 · 30 秒读懂</summary><div class="profile-body"><p class="biz">📖 <b>主营</b>: 钡盐、锶盐和锰系产品的研发、生产和销售</p><div class="chain-box"><div class="chain-flow">💰 <b>资金选中逻辑</b>: 碳酸锶供给收缩（河北辛集停产）→ 价格大涨 → 公司是国内锶盐龙头，产能3万吨 → 直接受益涨价弹性 → 资金抢筹</div><div class="chain-key">📍 <b>公司主营</b>: 主营钡盐、锶盐和锰系产品。2024年碳酸锶营收占比无公开数据，但锶盐是公司三大主业之一（来源：公司年报）。</div><div class="chain-relation" style="margin:8px 0;padding:6px 12px;background:rgba(255,255,255,0.04);border-left:3px solid #66bb6a;border-radius:3px"><span style="font-weight:600;color:#66bb6a">🎯 题材关联度: 强关联</span><span style="color:#aaa;margin-left:10px;font-size:0.9em">碳酸锶是公司主营产品，涨价直接增厚利润</span></div><div class="chain-narrative">【行业地位】公司是国内锶盐龙头，碳酸锶产能约3万吨/年，占国内总产能约15%（来源：行业研报）。【业绩兑现】2024年三季报营收同比-5%，净利润亏损，碳酸锶涨价尚未体现在业绩中。【题材关联度】碳酸锶是玻璃基板（TFT-LCD）和MLCC（多层陶瓷电容）的关键原料，近期因供给收缩（河北辛集化工停产）价格大涨，公司直接受益，属强关联。</div><div class="chain-meta"><span style="background:#6b7280;color:#fff;padding:3px 8px;border-radius:4px">基本面股</span><span class="moat">🛡 国内锶盐龙头，碳酸锶产能约3万吨/年</span><span class="img-level">🚀 想象空间 4/10 · 涨价题材周期短，业绩兑现需观察，想象空间有限</span></div></div><p><span class="label">🏭 行业:</span> 基础化工-化学原料-无机盐 · <span class="label">📅 上市:</span> 2001-03-20</p><div class="metrics"><div class="metric"><span class="v">158.1x</span><span class="k">PE-TTM</span></div><div class="metric"><span class="v">5.85x</span><span class="k">PB</span></div><div class="metric"><span class="v">146亿</span><span class="k">流通市值</span></div><div class="metric"><span class="v">4.0%</span><span class="k">换手率</span></div></div><p><span class="label">📊 技术形态:</span></p><div class="pattern-tags"><span class="pattern-tag warn">⚠️ 突破前高但 缺放量 (+10.0%)</span><span class="pattern-tag">✅ 创 60 日新高</span></div><div class="concept-tags">🏷️ <span class="concept-tag">碳酸锶涨价</span></div><div class="risk-box">⚠️ <b>风险点</b>: 涨价持续性存疑，若供给恢复价格回落，业绩弹性消失；当前估值已反映涨价预期 · 机构研报覆盖少, 缺乏基本面支撑 · 形似突破但量能或形态不支持</div></div></details>
+    </td></tr>
+    </tbody>
+      </table>
+    </div>
+    
+      </div>
+    </div>
+    <div class="dragon-switch"><h3>🔄 龙头动态切换</h3><div class="fallen"><strong style="color:#f59e0b">📉 老龙降级</strong><ul style="padding-left:22px;line-height:1.9"><li>春秋电子 <code style="color:#4d8eff">603890</code> · 原 3板 · 今日未涨停</li><li>中央商场 <code style="color:#4d8eff">600280</code> · 原 3板 · 今日未涨停</li></ul></div><div class="new-candidate" style="margin-top:14px"><strong style="color:#22c55e">🆕 新龙观察（昨1板→今2板）</strong><ul style="padding-left:22px;line-height:1.9"><li>亨通光电 <code style="color:#4d8eff">600487</code> · 封单 8.56亿 · 09:32:08首封</li><li>鑫科材料 <code style="color:#4d8eff">600255</code> · 封单 3.86亿 · 09:25:00首封</li><li>实益达 <code style="color:#4d8eff">002137</code> · 封单 1.66亿 · 09:30:09首封</li><li>金海高科 <code style="color:#4d8eff">603311</code> · 封单 6060万 · 13:18:02首封</li><li>北投科技 <code style="color:#4d8eff">600936</code> · 封单 3316万 · 09:49:44首封</li></ul></div></div><div class="strategy"><h3>📋 市场状态观察</h3><ul><li>✓ <strong>正常期</strong>：龙头溢价分化，高位风险盈亏比偏低</li><li>🎯 <strong>资金集中度最高</strong>：机器人（最高3板，9只涨停）</li><li>🆕 <strong>连板晋级观察</strong>：亨通光电（600487）昨1板今2板</li><li>⚠ <strong>降级信号</strong>：2 只老龙降级，反包胜率偏低</li><li>⚠ <strong>炸板率偏高</strong>：当日封板质量差，次日开盘需谨慎</li></ul><p style="font-size:12px;color:#718096;margin-top:6px;font-style:italic">以上为市场客观数据呈现，不构成任何投资建议；股市有风险，决策需自行判断</p></div>
+        <div class="footer">
+            数据来源：东财涨停池 + 同花顺热点 / 龙头战法策略 / 自动生成
+        </div>
+    </main>
+</div>
+</body>
+</html>
